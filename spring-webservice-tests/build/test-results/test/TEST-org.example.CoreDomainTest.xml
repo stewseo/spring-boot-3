@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.CoreDomainTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-02-27T16:46:08" hostname="STEWS" time="0.062">
+  <properties/>
+  <testcase name="settersShouldMutateState()" classname="org.example.CoreDomainTest" time="0.054"/>
+  <testcase name="toStringShouldAlsoBeTested()" classname="org.example.CoreDomainTest" time="0.007"/>
+  <testcase name="newVideoEntityShouldHaveNullId()" classname="org.example.CoreDomainTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
