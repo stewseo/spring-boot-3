@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.controller.HomeController;
+import org.example.service.VideoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,7 +20,8 @@ public class SecurityBasedTest {
   //use the auto-configured MockMvc to access HomeController endpoints
   @Autowired MockMvc mvc;
 
-  @MockBean VideoService videoService;
+  @MockBean
+  VideoService videoService;
 
   @Test
   void unauthUserShouldNotAccessHomePage() throws Exception {
@@ -27,6 +30,10 @@ public class SecurityBasedTest {
       .andExpect(status().isUnauthorized());
   }
 
+  // When used with WithSecurityContextTestExecutionListener this annotation can be added to a test method to emulate running with a mocked user.
+  // In order to work with MockMvc The SecurityContext that is used will have the following properties:
+  //The SecurityContext created with be that of SecurityContextHolder.createEmptyContext()
+  //It will be populated with an UsernamePasswordAuthenticationToken that uses the username of either value() or username(), GrantedAuthority that are specified by roles(), and a password specified by password().
   @Test
   @WithMockUser(username = "alice", roles = "USER")
   void authUserShouldAccessHomePage() throws Exception {

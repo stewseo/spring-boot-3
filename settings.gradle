@@ -1,2 +1,3 @@
-rootProject.name = 'spring-boot-tests'
-include 'spring-amqp-tests', 'spring-webservice-tests','db-migration-tests'
+rootProject.name = 'spring-boot-3'
+include 'spring-amqp-tests', 'spring-webservice-tests','db-migration-tests', 'spring-oauth', 'spring-method-security'
+

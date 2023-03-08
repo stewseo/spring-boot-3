@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.model.VideoEntity;
+import org.example.repository.VideoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

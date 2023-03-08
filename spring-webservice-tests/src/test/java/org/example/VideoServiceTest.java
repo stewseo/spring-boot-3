@@ -1,5 +1,10 @@
 package org.example;
 
+import org.example.model.NewVideo;
+import org.example.model.Search;
+import org.example.model.VideoEntity;
+import org.example.repository.VideoRepository;
+import org.example.service.VideoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

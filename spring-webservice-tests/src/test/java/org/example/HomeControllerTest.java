@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.controller.HomeController;
+import org.example.model.NewVideo;
+import org.example.service.VideoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -25,7 +28,8 @@ public class HomeControllerTest {
 
   // mock dependent bean of controller endpoint.
   // add a mock bean to a Spring ApplicationContext.
-  @MockBean VideoService videoService;
+  @MockBean
+  VideoService videoService;
 
   // verify that index page has html form
   @Test
