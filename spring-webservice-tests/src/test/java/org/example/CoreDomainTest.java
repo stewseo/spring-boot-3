@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class CoreDomainTest {
 
+  // Verify that when we create a new instance of VideoEntity, its id field should be null.
   @Test
   void newVideoEntityShouldHaveNullId() {
     VideoEntity entity = new VideoEntity("alice", "title", "description");
@@ -16,7 +17,7 @@ public class CoreDomainTest {
     assertThat(entity.getDescription()) //
       .isEqualTo("description");
   }
-
+  // Verify whether the value of the toString() method has the expected value.
   @Test
   void toStringShouldAlsoBeTested() {
     VideoEntity entity = new VideoEntity("alice", "title", "description");
@@ -24,6 +25,7 @@ public class CoreDomainTest {
       .isEqualTo("VideoEntity{id=null, username='alice', name='title', description='description'}");
   }
 
+  // Verify the entity’s setter methods
   @Test
   void settersShouldMutateState() {
     VideoEntity entity = new VideoEntity("alice", "title", "description");
@@ -31,6 +33,8 @@ public class CoreDomainTest {
     entity.setName("new name");
     entity.setDescription("new desc");
     entity.setUsername("bob");
+
+    // Verify that the state was mutated properly
     assertThat(entity.getId()).isEqualTo(99L);
     assertThat(entity.getUsername()).isEqualTo("bob");
     assertThat(entity.getName()).isEqualTo("new name");

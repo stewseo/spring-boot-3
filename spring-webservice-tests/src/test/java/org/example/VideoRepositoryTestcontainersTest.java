@@ -20,8 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.*;
 
-// @Testcontainers is a JUnit Jupiter extension to activate automatic startup and stop of containers used in a test case.
-// The test containers extension finds all fields that are annotated with Container and calls their container lifecycle methods.
+// The annotation from the Testcontainers junit-jupiter module that hooks into the life cycle of a JUnit 5 test case.
 @Testcontainers
 @DataJpaTest
 
@@ -36,15 +35,20 @@ public class VideoRepositoryTestcontainersTest {
   @Autowired
   VideoRepository repository;
 
+  // Testcontainer’s annotation to flag this as the container to control through the JUnit life cycle.
   @Container //
   static final PostgreSQLContainer<?> database = //
     new PostgreSQLContainer<>("postgres:9.6.12") //
       .withUsername("postgres");
 
+
   static class DataSourceInitializer //
+    // gives us a handle on the application context.
     implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    // the callback Spring will invoke while the application context is getting created.
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
+      // add additional property settings from the PostgreSQLContainer instance to the application context.
       TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext, //
         "spring.datasource.url=" + database.getJdbcUrl(), //
         "spring.datasource.username=" + database.getUsername(), //
@@ -69,6 +73,7 @@ public class VideoRepositoryTestcontainersTest {
           "Discover ways to not only debug your code")));
   }
 
+  // Smoke test that verifies things are up and operational
   @Test
   void findAllShouldProduceAllVideos() {
     List<VideoEntity> videos = repository.findAll();

@@ -17,21 +17,18 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// Annotation specifying that Spring Context includes components required for testing Spring MVC parts of the application.
-// auto-configures: @Controller, @ControllerAdvice, @JsonComponent, Converter, Filter, WebMvcConfigurer.
-// @WebMvcTest is annotated with JUnit5 hook @ExtendsWith(SpringExtension.class)
-@WebMvcTest(controllers = HomeController.class) // isolate test scope to HomeController
+// A Spring Boot test annotation that enables Spring MVC’s machinery. The controllers parameter constrains this test suite to only the HomeController class.
+@WebMvcTest(controllers = HomeController.class)
 public class HomeControllerTest {
 
-  // use the auto-configured MockMvc to access HomeController endpoints
+  // Adds an instance of Spring’s MockMvc utility to the application context. Then, we can autowire it into our test suite for all test methods to use.
   @Autowired MockMvc mvc;
 
-  // mock dependent bean of controller endpoint.
-  // add a mock bean to a Spring ApplicationContext.
+  // Using Spring Boot Test’s @MockBean annotation creates a mocked version of the required bean and adds it into the application context.
   @MockBean
   VideoService videoService;
 
-  // verify that index page has html form
+  // invokes the base URL of the HomeController class and checks various aspects of it
   @Test
   @WithMockUser
   void indexPageHasSeveralHtmlForms() throws Exception {
@@ -53,6 +50,9 @@ public class HomeControllerTest {
       "<form action=\"/new-video\"");
   }
 
+
+  // Uses Mockito’s hook to verify that the create() method of the mocked VideoService bean was called with the same parameters fed by MockMVC and the username from @WithMockUser
+
   @Test
   @WithMockUser
   void postNewVideoShouldWork() throws Exception {
@@ -60,9 +60,8 @@ public class HomeControllerTest {
       post("/new-video") //
         .param("name", "new video") //
         .param("description", "new desc") //
-        .with(csrf())) //
-      .andExpect(redirectedUrl("/"));
-
+        .with(csrf())) // supply the proper CSRF token
+      .andExpect(redirectedUrl("/")); // verifies that the controller issues an HTTP redirect
     verify(videoService).create( //
       new NewVideo( //
         "new video", //
