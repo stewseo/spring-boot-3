@@ -56,3 +56,6 @@ Spring boot autoconfigures ClientRegistrationRepository as well as OAuth2Authori
 ### <span style="color:green">**Applying CSS to our table**</span>
 - Create src/main/resources/static/style.css
 - Spring MVC will serve up static resources found in src/main/resources/static automatically
+
+![Screenshot_20230309_110348](https://user-images.githubusercontent.com/54422342/224247018-8d13ded6-cb8e-4e16-95e9-887dbd6d9280.png)
+
