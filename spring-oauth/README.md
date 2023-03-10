@@ -1,25 +1,25 @@
 
 ## Create a Google OAuth2 client, Register it with Spring Boot 3, and serve up YouTube data
 
-### <span style="color:yellow">**Add OAuth Client to a Spring Boot project**</span>
+### <span style="color:yellow">**Delegate to an external system such as Google to offload risk for user management**</span>
 
 An OAuth2-authorized client is represented in Spring Security OAuth2 using OAuth2AuthorizedClient.
 Spring boot autoconfigures ClientRegistrationRepository as well as OAuth2AuthorizedClientRepository to
 - parse necessary properties in the application.yaml file
 - facilitate the flow between our application and OAuth2 providers
 
-### <span style="color:green">**Define properties in Application.yml**</span>
+### <span style="color:green">**Configure properties in Application.yml**</span>
 - clientID and clientSecret to authenticate with Google.
 - scope to leverage the YouTube Data API.
 
-### <span style="color:green">**Bean Definition to Broker Requests**</span>
+### <span style="color:green">**Define bean to broker requests**</span>
 
 - The clientManager() bean definition will request the two autoconfigured Oauth2 beans and blend them together into DefaultOAuth2AuthorizedClientManager. This bean will do the legwork of pulling the necessary properties from application.yaml and using them in the context of an incoming servlet request.
 - When Spring Security OAuth2 is put on the class-path, Spring Boot auto-configures policies that will automatically combine the OAuth 2 beans with OAuth2AuthorizationClientManager
 
 ### <span style="color:yellow">**Invoking an OAuth2 API remotely (Invoking Google's YouTube Data API)**</span>
 
-### <span style="color:green">**Bean Definitions to create a client proxy that implements our Http service interface**</span>
+### <span style="color:green">**Define beans to create a client proxy that implements our Http service interface**</span>
 - The idea of HTTP client proxies is to capture all the details needed to interact with a remote service in an interface definition and let Spring Framework, under the hood, marshal the request and response.
 - Hooking OAuth 2 support into an HTTP remote service invoker
   - Initialize a WebClient with our OAuth2 exchange filter function
