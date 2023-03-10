@@ -28,7 +28,11 @@ public class HomeControllerTest {
   @MockBean
   VideoService videoService;
 
-  // invokes the base URL of the HomeController class and checks various aspects of it
+  // Simulates a user logging in with a username of user and an authority of ROLE_USER (default values)
+  // Uses MockMvc to perform a get("/").
+  // Performs a series of assertions, including verifying whether the result is an HTTP 200 (OK) response code and that the content contains a username of user and an authority of ROLE_USER.
+  // Then, it wraps up the MockMVC call by grabbing the entire response as a string.
+  // Verifies HTML output.
   @Test
   @WithMockUser
   void indexPageHasSeveralHtmlForms() throws Exception {

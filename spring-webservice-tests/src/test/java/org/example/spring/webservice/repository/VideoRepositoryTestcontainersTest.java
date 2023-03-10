@@ -19,18 +19,18 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.*;
 
-// The annotation from the Testcontainers junit-jupiter module that hooks into the life cycle of a JUnit 5 test case.
+// Testcontainers junit-jupiter annotation that hooks into the life cycle of a JUnit 5 test case
+// Spring Boot Test annotations that
+// - indicates that all entity classes and Spring Data JPA repositories should be scanned.
+// - tells Spring Boot NOT to replace the DataSource bean like it normally does when there’s an embedded database on the classpath
+// Spring test annotation that applies set of properties by hooking the Testcontainers-managed database into Spring Boot’s autoconfigured DataSource
 @Testcontainers
 @DataJpaTest
-
-// Annotation that can be applied to a test class to configure a test database to use instead of the application-defined or auto-configured DataSource.
-// In the case of multiple DataSource beans, only the @Primary DataSource is considered.
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-
-// @ContextConfiguration defines class-level metadata that is used to determine how to load and configure an ApplicationContext for integration tests.
 @ContextConfiguration(initializers = VideoRepositoryTestcontainersTest.DataSourceInitializer.class)
 public class VideoRepositoryTestcontainersTest {
 
+  // Injects the application’s real Spring Data repository.
   @Autowired
   VideoRepository repository;
 
@@ -40,22 +40,26 @@ public class VideoRepositoryTestcontainersTest {
     new PostgreSQLContainer<>("postgres:9.6.12") //
       .withUsername("postgres");
 
-
   static class DataSourceInitializer //
-    // gives us a handle on the application context.
+    // Class that gives us a handle on the application context
     implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    // the callback Spring will invoke while the application context is getting created.
+
+    // Callback Spring will invoke while the application context is getting created.
+    // Adds additional properties provided by the PostgreSQLContainer to the application context by
+    //  tapping into a container already started by Testcontainers to harness its JDBC URL, username, and password.
+    // Overrides autoconfigured JPA create-drop policy and switches back to create-drop.
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
-      // add additional property settings from the PostgreSQLContainer instance to the application context.
       TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext, //
         "spring.datasource.url=" + database.getJdbcUrl(), //
         "spring.datasource.username=" + database.getUsername(), //
         "spring.datasource.password=" + database.getPassword(), //
-        "spring.jpa.hibernate.ddl-auto=create-drop");
+        "spring.jpa.hibernate.ddl-auto=create-drop"); //
     }
   }
 
+  // Stores a whole list of VideoEntity objects in the database.
+  // Each VideoEntity instance has a user, a name, and a description.
   @BeforeEach
   void setUp() {
     repository.saveAll( //
@@ -72,19 +76,22 @@ public class VideoRepositoryTestcontainersTest {
           "Discover ways to not only debug your code")));
   }
 
-  // Smoke test that verifies things are up and operational
+  // Smoke test that verifies the findAll()method returns all three entities stored in the database. This type of test is to verify we’ve set everything up correctly.
   @Test
   void findAllShouldProduceAllVideos() {
     List<VideoEntity> videos = repository.findAll();
     assertThat(videos).hasSize(3);
   }
 
+  // Proving that our custom finder that supports our search feature is working
+  // Focuses on findByNameContainsIgnoreCase, using data stored in a database.
   @Test
   void findByName() {
     List<VideoEntity> videos = repository.findByNameContainsIgnoreCase("SPRING BOOT 3");
     assertThat(videos).hasSize(1);
   }
 
+  // Verifies our custom finder with a method name of length 52
   @Test
   void findByNameOrDescription() {
     List<VideoEntity> videos = repository.findByNameContainsOrDescriptionContainsAllIgnoreCase("CODE", "your code");

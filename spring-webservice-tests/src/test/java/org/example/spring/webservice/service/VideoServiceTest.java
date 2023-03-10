@@ -20,16 +20,23 @@ import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class VideoServiceTest {
-
+  // The class under test
   VideoService service;
+
+  // A collaborator required for VideoService is marked for mocking
   @Mock
   VideoRepository repository;
 
+  // Before every test method, VideoService is created with the mock VideoRepository injected through its constructor
   @BeforeEach
   void setUp() {
     this.service = new VideoService(repository);
   }
 
+  // Creates test data.
+  // Uses Mockito to define how the mock VideoRepository responds when its findAll() method is invoked.
+  // Invokes getVideos() method of VideoService
+  // Verifies the outcome
   @Test
   void getVideosShouldReturnAll() {
     // given
@@ -44,6 +51,7 @@ public class VideoServiceTest {
     assertThat(videos).containsExactly(video1, video2);
   }
 
+
   @Test
   void searchShouldReturnASubset() {
     // given
@@ -57,6 +65,10 @@ public class VideoServiceTest {
     assertThat(videos).containsExactly(video1);
   }
 
+  // Uses Mockito’s BDDMockito.given operator, a synonym for Mockito’s when() operator
+  // Mockito’s operator to match when the repository’s saveAndFlush() operation is called
+  // Invokes VideoService.create()
+  // Asserts against the results
   @Test
   void creatingANewVideoShouldReturnTheSameData() {
     // given
@@ -72,6 +84,9 @@ public class VideoServiceTest {
     assertThat(newVideo.getUsername()).isEqualTo("alice");
   }
 
+  // Uses Mockito's when() operator since Mockito’s given() operator is just a synonym.
+  // Invokes the delete() operation of VideoService.
+  // Verifies the methods invoked inside the service instead of canned data, due to the behavior of the service being more complex.
   @Test
   void deletingAVideoShouldWork() {
     // given
