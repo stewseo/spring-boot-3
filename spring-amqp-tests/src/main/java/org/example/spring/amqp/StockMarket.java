@@ -10,17 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+// Service that generates random stock action
 @Service
-// Enables Spring's scheduled task execution capability
 @EnableScheduling
 public class StockMarket {
     List<String> STOCK_SYMBOLS = List.of("ATT", "SBUX", "ZOOM");
     Random RAND = new Random();
 
-    // Specifies a basic set of AMQP operations. Provides synchronous send and receive methods.
-    // The convertAndSend(Object) and receiveAndConvert() methods allow let you send and receive POJO objects.
-    // Implementations are expected to delegate to an instance of org.springframework.amqp.support.converter.MessageConverter
-    // to perform conversion to and from AMQP byte[] payload type.
+    // Specifies a basic set of AMQP operations
     AmqpTemplate template;
     Map<String, StockMovement> lastTrade;
 
@@ -30,12 +27,13 @@ public class StockMarket {
         STOCK_SYMBOLS.forEach(symbol -> this.lastTrade.put(symbol, new StockMovement(symbol, RAND.nextFloat() + 100.0f)));
     }
 
+    // Every 500 ms generates a market movement
+    // Publishes the converted message to our "stock-market" topic exchange
+    // Routing key that binds a queue to our exchange: stock name of the last trade
     @Scheduled(fixedRate = 500L)
     void marketMovement() {
         StockMovement lastTrade = this.lastTrade.get(randomStockSymbol());
         StockMovement newTrade = new StockMovement(lastTrade.getStockName(), newPrice(lastTrade.getPrice()));
-        // Convert a Java object to an Amqp Message and send it to a specific exchange with a specific routing key.
-        //exchange – the name of the exchange routingKey – the routing key message – a message to send
         template.convertAndSend("stock-market", lastTrade.getStockName(), newTrade);
     }
 

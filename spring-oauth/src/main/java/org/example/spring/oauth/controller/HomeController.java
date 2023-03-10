@@ -21,7 +21,7 @@ public class HomeController {
     // Spring MVC Model object, where we create a channelVideos attribute.
     // It invokes our YouTube service’s channelVideos method with a channel ID, a page size of 10, and uses view counts as the way to sort search results.
     model.addAttribute("channelVideos", //
-      youTube.channelVideos("UCO8VycYk6N57A78HzSd7jvw", //
+      youTube.channelVideos("UC7yfnfvEUlXUIfm8rGLwZdA", //
         10, YouTube.Sort.VIEW_COUNT) //
     );
 

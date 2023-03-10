@@ -15,17 +15,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 // integration tests interaction between the Spring Boot application and the RabbitMQ message broker.
 @SpringBootTest
-@Testcontainers  // Annotation to give testcontainers hooks into the junit lifecycle
+@Testcontainers
 public class RabbitTest {
-
+    // RabbitMQ broker
     @Container
     static RabbitMQContainer container = new RabbitMQContainer(
             DockerImageName.parse("rabbitmq").withTag("3-management-alpine"));
 
     // Add environment variables as if they were in our application.properties file
     @DynamicPropertySource
-    static void configure(DynamicPropertyRegistry registry) { // Registry used with @DynamicPropertySource methods so that they can add properties to the Environment that have dynamically resolved values.
-        // assign connection details to spring boot properties in advance
+    static void configure(DynamicPropertyRegistry registry) {
         registry.add("spring.rabbitmq.host", container::getHost);
         registry.add("spring.rabbitmq.port", container::getAmqpPort);
     }

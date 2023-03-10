@@ -18,9 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// Tests that verify
-// Database schema that describes how to construct our database.
-// Constraints to ensure the consistency of data.
+// Tests that verify our database schema and constraints to ensure the consistency of our data
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class PaymentRepositoryTest {
@@ -34,7 +32,7 @@ class PaymentRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    // Test manually inserting Entities using the Spring Boot auto-configured TestEntityManager
+    // Verify manual insertion of Entities
     @Test
     void existingPaymentCanBeFound() {
         Order order = new Order(LocalDateTime.now(), BigDecimal.valueOf(100.0), true);

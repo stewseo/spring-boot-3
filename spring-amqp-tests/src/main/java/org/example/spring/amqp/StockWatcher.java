@@ -15,14 +15,12 @@ public class StockWatcher {
 
     List<StockMovement> trades = new ArrayList<>();
 
-    // Annotation that marks a method to be the target of a Rabbit message listener on the specified queues() (or bindings()).
-    // The containerFactory() identifies the RabbitListenerContainerFactory to use to build the rabbit listener container.
-    // If not set, a default container factory is assumed to be available with a bean name of rabbitListenerContainerFactory unless an explicit default has been provided through configuration.
-    //Processing of @RabbitListener annotations is performed by registering a RabbitListenerAnnotationBeanPostProcessor. This can be done manually or, more conveniently, through the <rabbit:annotation-driven/> element or EnableRabbit annotation.
+    // Target a Rabbit message listener on the specified bindings:
+    // queue, "stock-market" topic exchange, the binding key "*".
     @RabbitListener(
             bindings = @QueueBinding(
-                    value = @Queue, // A queue definition used within the bindings attribute of a QueueBinding.
-                    exchange = @Exchange(value = "stock-market", type= ExchangeTypes.TOPIC), // An exchange to which to bind a RabbitListener queue.
+                    value = @Queue, //
+                    exchange = @Exchange(value = "stock-market", type= ExchangeTypes.TOPIC), //
                     key = "*")
     )
     void listenForStockTrades(StockMovement trade) {
