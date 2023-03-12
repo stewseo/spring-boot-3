@@ -2,5 +2,5 @@ rootProject.name = 'spring-boot-3'
 include 'spring-amqp-tests', 'spring-webservice-tests',
         'db-migration-tests',
         'spring-oauth', 'spring-method-security',
-        'spring-data-jpa-queries', 'spring-webflux'
+        'spring-data-jpa-queries', 'spring-reactive-web'
 
