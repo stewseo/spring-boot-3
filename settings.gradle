@@ -1,6 +1,28 @@
+plugins {
+    id("com.gradle.enterprise") version("3.7.2")
+}
+
+
 rootProject.name = 'spring-boot-3'
-include 'spring-amqp-tests', 'spring-webservice-tests',
-        'db-migration-tests',
-        'spring-oauth', 'spring-method-security',
-        'spring-data-jpa-queries', 'spring-reactive-web'
+
+include 'spring-data-jpa-queries',
+        'spring-security-methodlevel','spring-security-oauth2',
+        'spring-webservice-tests', 'db-migration-tests', 'spring-amqp-tests',
+        'spring-webflux-tests', 'spring-r2dbc-tests', 'spring-boot-configuration'
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        buildLibs {
+            from(files("gradle/build.versions.toml"))
+        }
+    }
+}
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
+
 

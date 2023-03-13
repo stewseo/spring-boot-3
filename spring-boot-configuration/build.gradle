@@ -12,23 +12,44 @@ repositories {
 }
 
 dependencies {
+
     implementation buildLibs.spring.boot.starter.data.jpa
     implementation buildLibs.spring.boot.starter.web
     implementation buildLibs.spring.boot.starter.security
     implementation buildLibs.spring.boot.starter.mustache
+    implementation buildLibs.spring.security.test
+
+    annotationProcessor  buildLibs.spring.boot.configuration.processor
+    compileOnly buildLibs.spring.boot.configuration.processor
+
+    runtimeOnly buildLibs.h2db
+
+    implementation buildLibs.reactor.test
 
     compileOnly buildLibs.projectlombok
     annotationProcessor buildLibs.projectlombok
 
     runtimeOnly buildLibs.postgresql
-    runtimeOnly buildLibs.hsqldb
-
-    testImplementation buildLibs.spring.boot.starter.test
-    testImplementation buildLibs.spring.security.test
 
     testImplementation buildLibs.testcontainers.postgresql
     testImplementation buildLibs.testcontainers.junit.jupiter
 
+    testImplementation buildLibs.spring.boot.starter.test
+    testImplementation buildLibs.spring.security.test
+
+}
+
+compileJava.dependsOn(processResources)
+
+tasks.register("bootRunTest") {
+    group = "org.example"
+    description = "Runs the Spring Boot application with the test profile"
+    doFirst {
+        tasks.bootRun.configure {
+            systemProperty("spring.profiles.active", "test")
+        }
+    }
+    finalizedBy("bootRun")
 }
 
 test {

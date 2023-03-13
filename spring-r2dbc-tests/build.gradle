@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "3.0.3"
+    id "io.spring.dependency-management" version "1.0.15.RELEASE"
+}
+
+group 'org.example'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation buildLibs.spring.boot.starter.data.r2dbc
+    implementation buildLibs.spring.boot.starter.webflux
+    implementation buildLibs.spring.boot.starter.thymeleaf
+
+    implementation buildLibs.spring.boot.starter.test
+
+    runtimeOnly buildLibs.h2db
+
+    runtimeOnly buildLibs.r2dbc.h2
+
+    implementation buildLibs.reactor.test
+
+    testImplementation  buildLibs.spring.boot.starter.test
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,63 @@
+[versions]
+springboot = "3.0.4"
+springframework = "6.0.2"
+junit5 = "5.9.0"
+slf4j = "2.0.4"
+spock = "2.1-groovy-3.0"
+testcontainers = "1.17.6"
+
+[libraries]
+# core
+spring-boot-configuration-processor = { group = "org.springframework.boot", name= "spring-boot-configuration-processor", version.ref = 'springboot' }
+
+# web
+spring-boot-starter-web = { group = "org.springframework.boot", name= "spring-boot-starter-web", version.ref = 'springboot' }
+spring-boot-starter-webflux = { group = "org.springframework.boot", name= "spring-boot-starter-webflux", version.ref = 'springboot' }
+spring-boot-starter-thymeleaf = { group = "org.springframework.boot", name= "spring-boot-starter-thymeleaf", version.ref = 'springboot' }
+spring-boot-starter-mustache = { group = "org.springframework.boot", name= "spring-boot-starter-mustache", version.ref = 'springboot' }
+
+spring-hateoas = 'org.springframework.hateoas:spring-hateoas:2.0.2'
+
+# data
+spring-boot-starter-data = { group = "org.springframework.boot", name= "spring-boot-starter-data", version.ref = 'springboot' }
+spring-boot-starter-data-jpa = { group = "org.springframework.boot", name= "spring-boot-starter-data-jpa", version.ref = 'springboot' }
+spring-boot-starter-data-r2dbc = { group = "org.springframework.boot", name= "spring-boot-starter-data-r2dbc", version.ref = 'springboot' }
+r2dbc-h2 = 'io.r2dbc:r2dbc-h2:1.0.0.RELEASE'
+h2db = 'com.h2database:h2:2.1.214'
+
+# security
+spring-boot-starter-security = { group = "org.springframework.boot", name= "spring-boot-starter-security", version.ref = 'springboot' }
+spring-boot-starter-oauth2client = { group = "org.springframework.boot", name= "spring-boot-starter-oauth2client", version.ref = 'springboot' }
+
+# messaging
+spring-boot-starter-amqp = { group = "org.springframework.boot", name= "spring-boot-starter-amqp", version.ref = 'springboot' }
+
+# dbms
+postgresql = 'org.postgresql:postgresql:42.5.4'
+hsqldb = 'org.hsqldb:hsqldb:2.7.1'
+
+# testing
+
+spring-boot-starter-test = { group = "org.springframework.boot", name= "spring-boot-starter-test", version.ref = 'springboot' }
+spring-boot-starter-security-test = { group = "org.springframework.boot", name= "spring-boot-starter-security-test", version.ref = 'springboot' }
+
+spring-security-test = { group = "org.springframework.security", name= "spring-security-test", version.ref = 'springframework' }
+
+junit4 = "junit:junit:4.13.2"
+junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit5" }
+junit-vintage = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junit5" }
+
+reactor-test = 'io.projectreactor:reactor-test:3.5.3'
+
+testcontainers-junit-jupiter  = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+testcontainers-postgresql  = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+
+# logging
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+slf4j-jclover = { group = "org.slf4j", name = "jcl-over-slf4j", version.ref = "slf4j" }
+logback-classic = "ch.qos.logback:logback-classic:1.4.1"
+
+
+projectlombok = 'org.projectlombok:lombok:1.18.26'
+

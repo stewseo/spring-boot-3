@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "3.0.3"
+    id "io.spring.dependency-management" version "1.0.15.RELEASE"
+}
+
+group 'org.example'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation buildLibs.spring.boot.starter.webflux
+    implementation buildLibs.spring.hateoas
+    implementation buildLibs.spring.boot.starter.thymeleaf
+
+    implementation buildLibs.spring.boot.starter.test
+
+    testImplementation 'io.projectreactor:reactor-test:3.5.3'
+
+}
+
+test {
+    useJUnitPlatform()
+}
