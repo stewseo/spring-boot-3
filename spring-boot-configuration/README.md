@@ -114,10 +114,44 @@ Converter<String, GrantedAuthority> converter() {
 - Create a Spring profile named test by appending –test to the base name of the property file
 
 ### Properties using YAML
--
+YAML is a more succinct way to represent the same settings: application-alternate.yaml file in the src/main/resources 
+```
+app:
+  config:
+    header: Header YAML-based settings
+    intro: Check out this page hosted from YAML
+    users:
+      -
+        username: yaml1
+        password: password
+        authorities:
+          - ROLE_USER
+      -
+        username: yaml2
+        password: password
+        authorities:
+          - ROLE_USER
+      -
+        username: yaml3
+        password: password
+        authorities:
+          - ROLE_ADMIN
+```
+- The nested nature of YAML prevents duplicate entries and makes it clear where each property is located
+- The hyphens underneath users denote array entries
+- Because the users field of AppConfig is a complex type (List<UserAccount>), each field of each entry is listed on a separate line
+- Because authorities itself is a list, it too uses hyphens
 
 ### Setting properties with environment variables
--
+
+```
+$ SPRING_PROFILES_ACTIVE=alternative ./mvnw spring-boot:run
+$ ./gradlew bootRun --args='--spring.profiles.active=alternative'
+```
+- SPRING_PROFILES_ACTIVE and spring.profiles.active: The alternative way to reference properties on a Mac/Linux-based system. Dots typically don’t work as well, so capitalized tokens with underscores work.
+- alternative: The profile we are running. In the console output you can see The following 1 profile is active: “alternative” as proof that it’s running with that profile activated.
+- ./mvnw and ./gradlew: Run things using the Gradle/Maven wrapper.
+- spring-boot:run and bootRun: The command that activates the run goal of spring-boot-maven-plugin/standard gradle 'run' task with additional Spring Boot features
 
 ### Ordering property overrides
 -
