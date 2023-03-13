@@ -5,12 +5,12 @@
 
 An OAuth2-authorized client is represented in Spring Security OAuth2 using OAuth2AuthorizedClient.
 Spring boot autoconfigures ClientRegistrationRepository as well as OAuth2AuthorizedClientRepository to
-- parse necessary properties in the application.yaml file
-- facilitate the flow between our application and OAuth2 providers
+- Parse necessary properties in the application.yaml file
+- Facilitate the flow between our application and OAuth2 providers
 
 ### <span style="color:green">**Configure properties in Application.yml**</span>
-- clientID and clientSecret to authenticate with Google.
-- scope to leverage the YouTube Data API.
+- ClientID and clientSecret to authenticate with Google.
+- Scope to leverage the YouTube Data API.
 
 ### <span style="color:green">**Define bean to broker requests**</span>
 
@@ -43,10 +43,10 @@ Spring boot autoconfigures ClientRegistrationRepository as well as OAuth2Authori
 - @Controller indicates that this is a template-based web controller. Each web method returns the name of a template to render.
 - We are injecting the YouTube service through constructor injection
 - The index method has a Spring MVC Model object, where we create a channelVideos attribute, It invokes our YouTube service's channelVideos method with
-  - a channel ID
-  - a page size of 10
-  - and uses view counts as the way to sort search results.
-  - The name of the template to render is index.
+  - Channel ID
+  - Page size of 10
+  - Uses view counts as the way to sort search results
+- The name of the template to render is index.
 
 ### <span style="color:green">**Define Mustache templating engine**</span>
 - The name of the template expands to src/main/resources/templates/index.mustache.
