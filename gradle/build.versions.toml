@@ -24,6 +24,8 @@ spring-boot-starter-data-jpa = { group = "org.springframework.boot", name= "spri
 spring-boot-starter-data-r2dbc = { group = "org.springframework.boot", name= "spring-boot-starter-data-r2dbc", version.ref = 'springboot' }
 r2dbc-h2 = 'io.r2dbc:r2dbc-h2:1.0.0.RELEASE'
 h2db = 'com.h2database:h2:2.1.214'
+postgresql = 'org.postgresql:postgresql:42.5.4'
+hsqldb = 'org.hsqldb:hsqldb:2.7.1'
 
 # security
 spring-boot-starter-security = { group = "org.springframework.boot", name= "spring-boot-starter-security", version.ref = 'springboot' }
@@ -32,12 +34,7 @@ spring-boot-starter-oauth2client = { group = "org.springframework.boot", name= "
 # messaging
 spring-boot-starter-amqp = { group = "org.springframework.boot", name= "spring-boot-starter-amqp", version.ref = 'springboot' }
 
-# dbms
-postgresql = 'org.postgresql:postgresql:42.5.4'
-hsqldb = 'org.hsqldb:hsqldb:2.7.1'
-
 # testing
-
 spring-boot-starter-test = { group = "org.springframework.boot", name= "spring-boot-starter-test", version.ref = 'springboot' }
 spring-boot-starter-security-test = { group = "org.springframework.boot", name= "spring-boot-starter-security-test", version.ref = 'springboot' }
 
@@ -50,8 +47,8 @@ junit-vintage = { group = "org.junit.vintage", name = "junit-vintage-engine", ve
 
 reactor-test = 'io.projectreactor:reactor-test:3.5.3'
 
-testcontainers-junit-jupiter  = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
-testcontainers-postgresql  = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+testcontainers-junit-jupiter  = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "testcontainers" }
+testcontainers-postgresql  = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "testcontainers" }
 
 # logging
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }

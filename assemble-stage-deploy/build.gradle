@@ -19,11 +19,7 @@ dependencies {
     implementation buildLibs.spring.boot.starter.mustache
     implementation buildLibs.spring.security.test
 
-    annotationProcessor  buildLibs.spring.boot.configuration.processor
-    compileOnly buildLibs.spring.boot.configuration.processor
-
-    runtimeOnly buildLibs.h2db
-
+    runtimeOnly buildLibs.hsqldb
     runtimeOnly buildLibs.postgresql
 
     testImplementation buildLibs.spring.boot.starter.test
