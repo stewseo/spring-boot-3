@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.spring.webservice.service.VideoServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-09T20:57:51" hostname="STEWS" time="0.535">
-  <properties/>
-  <testcase name="searchShouldReturnASubset()" classname="org.example.spring.webservice.service.VideoServiceTest" time="0.535"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

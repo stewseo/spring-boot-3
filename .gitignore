@@ -6,6 +6,8 @@
 /build/
 gradlew*
 !gradle-wrapper.jar
+/**/build
+/*/build
 
 *.jar
 *.bat

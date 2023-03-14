@@ -47,8 +47,8 @@ junit-vintage = { group = "org.junit.vintage", name = "junit-vintage-engine", ve
 
 reactor-test = 'io.projectreactor:reactor-test:3.5.3'
 
-testcontainers-junit-jupiter  = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "testcontainers" }
-testcontainers-postgresql  = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "testcontainers" }
+testcontainers-junit-jupiter  = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "testcontainers" }
+testcontainers-postgresql  = { group = "org.testcontainers", name = "postgresql", version.ref = "testcontainers" }
 
 # logging
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }

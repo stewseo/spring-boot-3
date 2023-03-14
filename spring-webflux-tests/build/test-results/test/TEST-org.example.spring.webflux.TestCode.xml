@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.spring.webflux.TestCode" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-11T18:26:06" hostname="STEWS" time="0.142">
-  <properties/>
-  <testcase name="example1()" classname="org.example.spring.webflux.TestCode" time="0.142"/>
-  <system-out><![CDATA[10:26:06.582 [Test worker] DEBUG reactor.util.Loggers - Using Slf4j logging framework
-spring
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
