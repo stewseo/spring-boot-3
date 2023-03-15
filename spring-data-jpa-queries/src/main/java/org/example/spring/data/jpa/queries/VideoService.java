@@ -28,36 +28,42 @@ public class VideoService {
     return repository.saveAndFlush(new VideoEntity(newVideo.name(), newVideo.description()));
   }
 
-
+  /**
+   * @param videoSearch containing user entered data containing both name and description details, only the name field, or only the description field
+   * @return list of VideoEntity objects
+   */
   public List<VideoEntity> search(VideoSearch videoSearch) {
+    // Checks that both fields of the VideoSearch record contain actual text and are neither empty nor null using Spring Framework utility class, StringUtils
     if (StringUtils.hasText(videoSearch.name()) //
       && StringUtils.hasText(videoSearch.description())) {
       return repository //
-        .findByNameContainsOrDescriptionContainsAllIgnoreCase( //
+        .findByNameContainsOrDescriptionContainsAllIgnoreCase( // invokes a custom finder that matches the name field and the description field, but with the Contains qualifiers and the AllIgnoreCase modifier
           videoSearch.name(), videoSearch.description());
     }
-
+    // If either field is empty (or null) check if the name field has text. If so, invoke the custom finder matching on name with the Contains and IgnoreCase qualifiers
     if (StringUtils.hasText(videoSearch.name())) {
       return repository.findByNameContainsIgnoreCase(videoSearch.name());
     }
-
+    // Also, check whether the description field has text. If so, use the custom finder that matches on description with Contains and IgnoreCase qualifiers.
     if (StringUtils.hasText(videoSearch.description())) {
       return repository.findByDescriptionContainsIgnoreCase(videoSearch.description());
     }
-
     return Collections.emptyList();
   }
 
-  // method that leverages Query By Example by creating a VideoService.search() method that takes in one value and applies it to all the fields
+  /**
+   * Creates a probe based on the same domain type as the repository and copies the value attribute into the probe’s Name and Description fields, but only if there is text. If the value attribute is empty, the fields are left null.
+   * Assembles an Example<VideoEntity> using and in addition to providing the probe, also provides additional criteria of ignoring the casing and applying a CONTAINING match, which puts wildcards on both sides of every input.
+   * Matches any, an Or operation, since the same criteria is put in all fields.
+   * @param search the UniversalSearch DTO.
+   * @return List<VideoEntity> the result finding all using this example.
+   */
   public List<VideoEntity> search(UniversalSearch search) {
-    // Create a probe based on the same domain type as the repository and copy the value attribute into the probe’s Name and Description fields, but only if there is text.
-    // If the value attribute is empty, the fields are left null
     VideoEntity probe = new VideoEntity();
     if (StringUtils.hasText(search.value())) {
       probe.setName(search.value());
       probe.setDescription(search.value());
     }
-    // assemble an Example<VideoEntity> providing additional criteria of ignoring the casing and applying a CONTAINING match, which puts wildcards on both sides of every input.
     Example<VideoEntity> example = Example.of(probe, //
       ExampleMatcher.matchingAny() //
         .withIgnoreCase() //

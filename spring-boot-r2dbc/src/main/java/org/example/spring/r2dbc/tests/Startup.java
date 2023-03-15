@@ -11,17 +11,22 @@ import reactor.test.StepVerifier;
  * - Turns initDatabase() into a Spring bean, added to the application context<br>
  * - Defines our Spring Data R2DBC schema once the application is started inside Spring Boot’s functional interface for an object<br>
  * - Injects a copy of this Spring Data R2DBC bean, so we can load test data<br>
- * - Coerces a Java 8 lambda function into CommandLineRunner<br>
  */
 @Configuration
 public class Startup {
 
+  /**
+   * @param template R2dbcEntityTemplate<p>
+   *                 - Carries out the SQL statement that creates an EMPLOYEE table with a self-incrementing id field in H2's dialect.<p>
+   *                 - Defines 3 typesafe insert operations by providing a type parameter.<p>
+   *                 - Forces execution of our reactive flow using Reactor Test.<p>
+   *                 - Verifies that we receive an expected count, indicating that the operation was successful.<p>
+   *                 - Ensures that we receive Reactive Streams onComplete signals.
+   * @return an object that is automatically executed once the application is started.
+   */
   @Bean
   CommandLineRunner initDatabase(R2dbcEntityTemplate template) {
     return args -> {
-      //  Carries out the SQL statement that creates an EMPLOYEE table with a self-incrementing id field in H2's dialect using the underlying DatabaseClient
-      //  Ensures we received a Reactive Streams onComplete signal and verifies next count
-      //  by converting and executing this whole reactive flow into StepVerifier using Reactor Test’s operator
       template.getDatabaseClient() //
         .sql("CREATE TABLE EMPLOYEE (id IDENTITY NOT NULL PRIMARY KEY , name VARCHAR(255), role VARCHAR(255))") //
         .fetch() //
@@ -30,9 +35,12 @@ public class Startup {
         .expectNextCount(1) //
         .verifyComplete();
 
-      // Defines an insert operation with a provided a type parameter/actual data.
-      // Forces the execution of our reactive flow using Reactor Test.
-      // Verifies whether we received the onComplete signal and Expects a single response for a single insert
+      /**
+       * Defines an insert operation with provided Employee data. By providing a type parameter, the subsequent operations are typesafe.
+       * Forces the execution of our reactive flow using Reactor Test
+       * Expects a single response, for a single insert.
+       * Verifies whether we received the onComplete signal.
+       */
       template.insert(Employee.class) //
         .using(new Employee("Frodo Baggins", "ring bearer")) //
         .as(StepVerifier::create) //

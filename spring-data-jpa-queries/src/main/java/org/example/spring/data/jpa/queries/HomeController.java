@@ -29,10 +29,14 @@ public class HomeController {
     return "redirect:/";
   }
 
-  // Deserializes the incoming form in @ModelAttribute VideoSearch
-  // Forwards VideoSearch criteria to VideoService.
-  // Inserts/stores search results into the Model object under the name videos to be rendered by the index template
-  // returns the name of the template to render, index. Spring Boot is responsible for translating this name to src/main/resources/templates/index.mustache
+  /**
+   * Method is marked for processing HTTP POST requests to the /multi-field-search.
+   * @param search VideoSearch record type that is annotated with Spring MVC’s signal to deserialize the incoming form.
+   * @param model is a mechanism to send information out for rendering.
+   *               Forwards VideoSearch criteria to VideoService in the search() method.
+   *               Inserts the results into the Model object under the name videos.
+   * @return the name of the template to render, index. Spring Boot is responsible for translating this name to src/main/resources/templates/index.mustache.
+   */
   @PostMapping("/multi-field-search")
   public String multiFieldSearch( //
     @ModelAttribute VideoSearch search, //
@@ -43,10 +47,14 @@ public class HomeController {
     return "index";
   }
 
-  // Web method to process a UniversalSearch DTO
-  // Captures incoming form in the single-value UniversalSearch type
-  // Search DTO is passed on to the videoService search() method
-  // Stores search results in the Model field to be rendered by the index template
+  /**
+   * Maps HTTP post requests /universal-search to this method.
+   * Processes the incoming form, captured in the single-value UniversalSearch type.
+   * @param search DTO is passed on to the videoService search() method.
+   * @param model search results are stored in the Model field to be rendered by the index template.
+   * @return index the name of the template to render.
+   */
+
   @PostMapping("/universal-search")
   public String universalSearch(@ModelAttribute UniversalSearch search, Model model) {
     List<VideoEntity> searchResults = videoService.search(search); //

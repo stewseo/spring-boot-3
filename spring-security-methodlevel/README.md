@@ -1,7 +1,8 @@
-# Method-level security
+## Method-level security
 
+#### spring-security-methodlevel's goals 
 
-## Locking down access to the owner of the data
+### Locking down access to the owner of the data
 
 ```java
   @PreAuthorize("#entity.username == authentication.name")
@@ -14,7 +15,7 @@
 - authentication.name: A Spring Security argument to access the current security context’s authentication object and look up the principal’s name
 
 
-## Enabling method-level security
+### Enabling method-level security
 - @EnableMethodSecurity is Spring Security’s annotation to activate method-based security
 - Activates Spring Security’s more powerful @PreAuthorize annotation
 - Leverages Spring Security’s simplified AuthorizationManager API

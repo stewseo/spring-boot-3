@@ -25,4 +25,5 @@ gradleEnterprise {
         termsOfServiceAgree = "yes"
     }
 }
+include 'spring-boot-webapplication'
 

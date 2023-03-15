@@ -19,7 +19,6 @@ dependencies {
     implementation buildLibs.spring.boot.starter.test
 
     runtimeOnly buildLibs.h2db
-
     runtimeOnly buildLibs.r2dbc.h2
 
     implementation buildLibs.reactor.test

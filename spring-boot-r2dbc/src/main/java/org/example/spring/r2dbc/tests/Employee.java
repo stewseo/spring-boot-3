@@ -5,13 +5,13 @@ import org.springframework.data.annotation.Id;
 import java.util.Objects;
 
 /**
- * This class defines our domain’s type, as required in the EmployeeRepository declaration, by 3 class fields:<br>
- * - The primary key of type Long is denoted by Spring Data Commons’ annotation, @Id.
- *  Note that this is NOT JPA’s jakarta.persistence.Idannotation but instead a Spring Data-specific annotation.<br>
- * - name and role
+ * This class defines our domain’s type, as required in the EmployeeRepository declaration.
  */
 public class Employee {
-
+  /**
+   * The primary key of type Long is denoted by Spring Data Commons’ annotation, @Id.<br>
+   *  Note that this is NOT JPA’s jakarta.persistence.Id annotation but instead a Spring Data-specific annotation.
+   */
   private @Id Long id;
   private String name;
   private String role;
