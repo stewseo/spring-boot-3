@@ -65,6 +65,7 @@ this.role = role;
   - Ensure that we receive Reactive Streams onComplete signals.
 
 ### Returning data reactively to an API controller
+
 #### Hook up our reactive data supply to an API controller:
 ```java
 /**
@@ -105,7 +106,6 @@ public class ApiController {
   }
 }
 ```
-
 
 ### Reactively dealing with data in a template
 

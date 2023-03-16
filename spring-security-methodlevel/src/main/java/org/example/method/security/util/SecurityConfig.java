@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+  // Initializes 3 default users for the UserManagementRepository.
   @Bean
   CommandLineRunner initUsers(UserManagementRepository repository) {
     return args -> {
@@ -25,11 +26,13 @@ public class SecurityConfig {
     };
   }
 
+  // Returns a custom UserDetailsService that retrieves users from the UserRepository.
   @Bean
   UserDetailsService userService(UserRepository repo) {
     return username -> repo.findByUsername(username).asUser();
   }
 
+  // Defines a SecurityFilterChain that configures URL-based authorization for various endpoints, as well as form-based and HTTP basic authentication.
   @Bean
   SecurityFilterChain configureSecurity(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests() //

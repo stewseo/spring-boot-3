@@ -1,12 +1,13 @@
 ## Releasing a Spring Boot Application
 
-#### This project's goal is to demonstrate how to:
-- Turn our application from a collection of code into an executable, ready for any production environment, including the cloud:
-  - Creating an uber JAR that is runnable anywhere.
-  - Baking a Docker container image that can be run locally with no need for Java.
-  - Pushing our Docker container to Docker Hub where it can be consumed by our clients.
-- Manage/tune/tweak applications once deployed so that we could scale it up as needed:
-  - Running multiple instances of our uber JAR pointed at a persistent database, different than the one it came bundled with.
+The goal of this project is to provide a comprehensive guide on how to turn a Spring Boot application from a collection of code into a fully executable, production-ready application that can run in any environment, including the cloud. This project demonstrates how to:
+
+- Create an uber JAR that contains all dependencies and can be run anywhere, regardless of the target environment.
+- Build a Docker container image that can be run locally without requiring Java installation, providing the flexibility to deploy our application on any Docker-compatible platform.
+- Push the Docker container image to Docker Hub, making it easily consumable by our clients and allowing for seamless distribution.
+- Deploy and manage the application in a scalable manner, by running multiple instances of the uber JAR, each pointed at a separate, persistent database.
+
+This project covers the entire application release lifecycle, from building to deployment, allowing developers to quickly and easily release their Spring Boot applications into production environments.
 
 ### Creating an uber JAR that is runnable anywhere
 

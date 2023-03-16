@@ -1,32 +1,22 @@
-# Ignore Gradle project-specific cache directory
-.gradle
-
 # Ignore Gradle build output directory
-.gradle
-/build/
-gradlew*
-!gradle-wrapper.jar
-/**/build
-/*/build
+**/.gradle
 
-*.jar
-*.bat
-*.txt
+**/gradlew*
 
-.classpath
-.project
-.settings/
+!**/gradle-wrapper.jar
 
-*-cs-cleanup.xml
-*-cs-formatter.xml
-.checkstyle
+**/build
+
+**/*.jar
+**/*.bat
+**/*.txt
 
 # intellij files
-build-idea/
-.idea/
+**/build-idea/
+**/.idea/
 
-*.iml
-*.ipr
-*.iws
-*.gpg
-*.pub
+**/*.iml
+**/*.ipr
+**/*.iws
+**/*.gpg
+**/*.pub

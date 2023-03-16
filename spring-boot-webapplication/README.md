@@ -1,10 +1,10 @@
-## Creating a Spring-Boot Web Application
+## Develop a Spring Boot web application that can serve dynamic content and interact with third-party apps through a JSON-based API.
 
-This project has the following goals:
-- Inject demo data using a service
-- Create a web controller that uses Mustache to render dynamic content based on the demo data
-- Create a JSON-based API allowing third-party apps to interact with our web app, whether it’s to retrieve data or send in updates
-- Leverage Node.js to introduce some JavaScript to our web app using Gradle plugin:
+### This project aims to accomplish its goal by:
+- Injecting demo data using a service: Set up a service to inject demo data into the application. This data will be used to populate the dynamic content on the web pages.
+- Creating a web controller that uses Mustache: Use Mustache, a templating engine, to render dynamic content based on the demo data. The controller will retrieve the data from the service and pass it to the Mustache templates to render the web pages.
+- Creating a JSON-based API: Develop a JSON-based API that allows third-party apps to interact with the web application. The API can be used to retrieve data or send updates to the application.
+- Leveraging Node.js: To introduce some JavaScript to the web application, use a Gradle plugin to incorporate Node.js. This will allow for additional functionality to be added to the application, such as client-side scripting or server-side logic.
 
 
 ### Creating a Spring MVC web controller

@@ -9,7 +9,3 @@
 - Test against a real database:
   - Test Custom Queries: Inferred, JPQL, and Native SQL Queries.
   - Test db migrations.
-
-
-	  
-	  

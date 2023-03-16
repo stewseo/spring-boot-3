@@ -1,5 +1,6 @@
-
 ## Create a Google OAuth2 client, Register it with Spring Boot 3, and serve up YouTube data
+
+#### This project aims to:
 
 ### <span style="color:yellow">**Delegate to an external system such as Google to offload risk for user management**</span>
 

@@ -7,9 +7,9 @@ rootProject.name = 'spring-boot-3'
 
 include 'spring-data-jpa-queries',
         'spring-security-methodlevel','spring-security-oauth2',
-        'spring-webservice-tests', 'db-migration-tests', 'spring-amqplistener-tests',
-        'spring-boot-configuration', 'spring-boot-application-release', 'spring-boot-nativeimages',
-        'spring-boot-webflux', 'spring-boot-r2dbc'
+        'spring-boot-tests', 'db-migration-tests', 'spring-amqplistener-tests',
+        'spring-boot-configuration', 'spring-boot-application-release', 'spring-boot-nativeimage',
+        'spring-boot-webflux', 'spring-boot-r2dbc', 'spring-boot-webapplication', 'spring-data-jpa-id-class-issues'
 
 dependencyResolutionManagement {
     versionCatalogs {
@@ -25,5 +25,7 @@ gradleEnterprise {
         termsOfServiceAgree = "yes"
     }
 }
-include 'spring-boot-webapplication'
+
+
+
 
