@@ -24,4 +24,11 @@ public class VipCustomerWithIdClass extends CustomerWithIdClass {
     public void setVipNumber(String vipNumber) {
         this.vipNumber = vipNumber;
     }
+
+    @Override
+    public String toString() {
+        return "VipCustomerWithIdClass{" +
+                "vipNumber='" + vipNumber + '\'' +
+                "} " + super.toString();
+    }
 }

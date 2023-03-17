@@ -3,6 +3,7 @@ package org.example.demo;
 import org.example.demo.IdClass.CustomerWithIdClass;
 import org.example.demo.IdClass.CustomerWithIdClassRepository;
 import org.example.demo.IdClass.VipCustomerWithIdClass;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,20 +15,15 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-/**
- * Purpose: Investigate and solve an issue that arises when saving a modified subclass object with a composite primary key using IdClass, which results in a primary key conflict with an INSERT statement instead of an UPDATE statement.
- * <p>
- * Goal: Ensure that objects with composite primary keys using IdClass can be saved and modified correctly, and to resolve the identified issue.
- */
 @SpringBootTest
 @Testcontainers
 class SpringDataIdClassTests {
 
     @Container
     static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:9.6.12")
-        .withDatabaseName("demo")
-        .withUsername("postgres")
-        .withPassword("password");
+            .withDatabaseName("demo")
+            .withUsername("postgres")
+            .withPassword("password");
 
     @DynamicPropertySource
     static void postgresProperties(DynamicPropertyRegistry registry) {
@@ -44,8 +40,16 @@ class SpringDataIdClassTests {
     @Autowired
     TransactionTemplate txTemplate;
 
+    @BeforeEach
+    void setup() {
+
+        txTemplate.executeWithoutResult(tx -> {
+            repositoryIdClassVersion.deleteAll();
+        });
+    }
+
     @Test
-    void idClassWithoutTransaction() {
+    void idClassWithInnerTransaction() {
         doStuff();
     }
 
@@ -60,53 +64,28 @@ class SpringDataIdClassTests {
         doStuff();
     }
 
-
-    @Test
-    void baseIdClassWithoutTransaction() {
-        doStuffWithBase();
-    }
-
-    @Test
-    void baseIdClassWithTransaction() {
-        txTemplate.execute(status -> doStuffWithBase());
-    }
-
-    @Test
-    @Transactional
-    void baseIdClassWithTransactional() {
-        doStuffWithBase();
-    }
-
-    // Crates an instance of the CustomerWithIdClass, sets its properties, saves it to the repository, modifies it, saves it again, and returns the object.
-    private CustomerWithIdClass doStuffWithBase() {
-        CustomerWithIdClass customer = new CustomerWithIdClass("a", "b");
-        customer.setVersionId(123L);
-        customer.setUnitId(456L);
-
-        customer = repositoryIdClassVersion.save(customer);//save object of base class, ok
-
-        customer.setFirstName("a2");
-        customer = repositoryIdClassVersion.save(customer);//modify object of base class and save again, ok
-        return customer;
-    }
-
     private VipCustomerWithIdClass doStuff() {
+//        CustomerWithIdClass customer = new CustomerWithIdClass("a", "b");
+//        customer.setVersionId(123L);
+//        customer.setUnitId(456L);
+//
+//        customer = repositoryIdClassVersion.save(customer);//save object of base class, ok
+//
+//        customer.setFirstName("a2");
+//        customer = repositoryIdClassVersion.save(customer);//modify object of base class and save again, ok
 
         VipCustomerWithIdClass vipCustomer = new VipCustomerWithIdClass("a", "b", "888");
         vipCustomer.setVersionId(987L);
         vipCustomer.setUnitId(654L);
 
-        vipCustomer = repositoryIdClassVersion.save(vipCustomer); //save object of subclass, ok
+        vipCustomer = repositoryIdClassVersion.save(vipCustomer);//save object of subclass, ok
 
         vipCustomer.setVipNumber("999");
-
-        // The issue occurs in Spring JPA when saving a modified subclass object with a composite primary key using IdClass.
-        // This leads to a primary key conflict with an INSERT statement instead of an UPDATE statement.
-
-        vipCustomer = repositoryIdClassVersion.save(vipCustomer);
-
-        // The issue is specific to cases where the base class has a composite primary key with IdClass.
-        // Occurs only when the subclass is saved for the second time.
+        vipCustomer = repositoryIdClassVersion.save(vipCustomer);//modify object of subclass and save again, NOT OK
+        // ↑ THIS FAILS BECAUSE OF PRIMARY KEY CONFLICT. INSERT STATEMENT WAS USED INSTEAD OF UPDATE, WHY?
+        // this failure only happens when:
+        // 1. base class uses IdClass for composite primary key
+        // 2. saving an instance of the subclass for the second time after modification
 
         return vipCustomer;
     }

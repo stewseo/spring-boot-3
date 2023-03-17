@@ -16,6 +16,10 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Purpose: Identify issues with merging objects of a subclass with a composite primary key and ensure that updates are properly executed instead of insert statements.
  * <p>
@@ -25,7 +29,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 class HibernateIdClassTests {
 
-    // Create a PostgreSQL database container for testing purposes that ensures isolation and reproducibility
+    // Create a PostgreSQL database container for testing purposes that ensures isolation and reproducibility.
     @Container
     static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:9.6.12")
             .withDatabaseName("demo")
@@ -65,9 +69,7 @@ class HibernateIdClassTests {
         EntityTransaction tx = em.getTransaction();
 
         tx.begin();
-
         doStuff(em);
-
         tx.commit();
     }
 
@@ -98,18 +100,28 @@ class HibernateIdClassTests {
         // This issue only occurs when the base class uses IdClass for composite primary key and an instance of the subclass is saved for the second time after modification.
         vipCustomer = em.merge(vipCustomer);
 
+        List<VipCustomerWithIdClass> vipCustomers = em.createQuery("SELECT vc FROM VipCustomerWithIdClass vc", VipCustomerWithIdClass.class)
+                .getResultList();
+
+
+        System.out.println("\n\n++++++ vipCustomers " + vipCustomers.size());
+        vipCustomers.forEach(System.out::println);
+        System.out.println("\n\n");
+
+        assertThat(vipCustomers.size()).isEqualTo(1L);
+
         return vipCustomer;
     }
 
-    private CustomerWithIdClass doStuffWithBaseClass(EntityManager em) {
-        CustomerWithIdClass customer = new CustomerWithIdClass("a", "b");
-        customer.setVersionId(123L);
-        customer.setUnitId(456L);
-
-        customer = entityManager.merge(customer);//merge object of base class, ok
-
-        customer.setFirstName("a2");
-        customer = entityManager.merge(customer);//modify object of base class and merge again, ok
-        return customer;
-    }
+//    private CustomerWithIdClass doStuffWithBaseClass(EntityManager em) {
+//        CustomerWithIdClass customer = new CustomerWithIdClass("a", "b");
+//        customer.setVersionId(123L);
+//        customer.setUnitId(456L);
+//
+//        customer = entityManager.merge(customer);//merge object of base class, ok
+//
+//        customer.setFirstName("a2");
+//        customer = entityManager.merge(customer);//modify object of base class and merge again, ok
+//        return customer;
+//    }
 }
