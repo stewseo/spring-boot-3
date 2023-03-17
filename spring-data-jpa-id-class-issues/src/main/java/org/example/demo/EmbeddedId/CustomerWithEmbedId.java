@@ -1,15 +1,13 @@
-package org.example.IdClass;
+package org.example.demo.EmbeddedId;
 
 
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.DiscriminatorFormula;
-
 
 import java.io.Serializable;
 
@@ -17,21 +15,20 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorFormula("case when vip_number is not null then 'vip' else 'normal' end")
 @DiscriminatorValue("normal")
-@IdClass(CustomerPK.class)
-@Table(name = "customer_with_id_class")
-public class CustomerWithIdClass implements Serializable {
+@Table(name = "customer_with_embedded_id")
+public class CustomerWithEmbedId implements Serializable {
+
+    //    @EmbeddedId
+    @EmbeddedId
+    private CustomerPK customerPK;
+
     private String firstName;
     private String lastName;
 
-    @Id
-    private Long versionId;
-    @Id
-    private Long unitId;
-
-    protected CustomerWithIdClass() {
+    protected CustomerWithEmbedId() {
     }
 
-    public CustomerWithIdClass(String firstName, String lastName) {
+    public CustomerWithEmbedId(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -52,19 +49,17 @@ public class CustomerWithIdClass implements Serializable {
         this.lastName = lastName;
     }
 
-    public Long getVersionId() {
-        return versionId;
-    }
-
     public void setVersionId(Long versionId) {
-        this.versionId = versionId;
-    }
-
-    public Long getUnitId() {
-        return unitId;
+        if (customerPK == null) {
+            customerPK = new CustomerPK();
+        }
+        this.customerPK.setVersionId(versionId);
     }
 
     public void setUnitId(Long unitId) {
-        this.unitId = unitId;
+        if (customerPK == null) {
+            customerPK = new CustomerPK();
+        }
+        this.customerPK.setUnitId(unitId);
     }
 }

@@ -29,6 +29,7 @@ dependencies {
     testImplementation buildLibs.testcontainers.junit.jupiter
 }
 
+// simplifies version management of test container dependencies across multiple sub-projects by ensuring all dependencies in the project are using the same version specified in the BOM.
 dependencyManagement {
     imports {
         mavenBom "org.testcontainers:testcontainers-bom:1.17.6"

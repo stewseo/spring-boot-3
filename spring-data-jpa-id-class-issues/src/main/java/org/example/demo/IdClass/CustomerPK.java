@@ -1,12 +1,10 @@
-package org.example.EmbeddedId;
+package org.example.demo.IdClass;
 
-import jakarta.persistence.Embeddable;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-@Embeddable
 public class CustomerPK implements Serializable {
 
     private Long unitId;

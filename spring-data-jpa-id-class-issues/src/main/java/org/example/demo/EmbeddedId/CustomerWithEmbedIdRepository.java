@@ -1,4 +1,4 @@
-package org.example.EmbeddedId;
+package org.example.demo.EmbeddedId;
 
 import org.springframework.data.repository.CrudRepository;
 

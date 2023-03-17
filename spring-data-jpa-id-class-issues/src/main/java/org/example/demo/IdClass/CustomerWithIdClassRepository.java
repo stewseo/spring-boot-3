@@ -1,4 +1,4 @@
-package org.example.IdClass;
+package org.example.demo.IdClass;
 
 import org.springframework.data.repository.CrudRepository;
 

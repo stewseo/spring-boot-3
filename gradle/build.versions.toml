@@ -21,7 +21,14 @@ spring-hateoas = 'org.springframework.hateoas:spring-hateoas:2.0.2'
 # data
 spring-boot-starter-data = { group = "org.springframework.boot", name= "spring-boot-starter-data", version.ref = 'springboot' }
 spring-boot-starter-data-jpa = { group = "org.springframework.boot", name= "spring-boot-starter-data-jpa", version.ref = 'springboot' }
+
+spring-boot-starter-data-cassandra = { group = "org.springframework.boot", name= "spring-boot-starter-data-cassandra", version.ref = 'springboot' }
+spring-boot-starter-data-redis = { group = "org.springframework.boot", name= "spring-boot-starter-data-redis", version.ref = 'springboot' }
+spring-boot-starter-data-elasticsearch = { group = "org.springframework.boot", name= "spring-boot-starter-data-elasticsearch", version.ref = 'springboot' }
+spring-boot-starter-data-mongodb = { group = "org.springframework.boot", name= "spring-boot-starter-data-mongodb", version.ref = 'springboot' }
+
 spring-boot-starter-data-r2dbc = { group = "org.springframework.boot", name= "spring-boot-starter-data-r2dbc", version.ref = 'springboot' }
+
 r2dbc-h2 = 'io.r2dbc:r2dbc-h2:1.0.0.RELEASE'
 h2db = 'com.h2database:h2:2.1.214'
 postgresql = 'org.postgresql:postgresql:42.5.4'
@@ -55,6 +62,13 @@ slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 slf4j-jclover = { group = "org.slf4j", name = "jcl-over-slf4j", version.ref = "slf4j" }
 logback-classic = "ch.qos.logback:logback-classic:1.4.1"
 
-
+# annotation
 projectlombok = 'org.projectlombok:lombok:1.18.26'
+
+# observability?
+spring-boot-starter-actuator = { group = "org.springframework.boot", name= "spring-boot-starter-actuator", version.ref = 'springboot' }
+micrometer-tracing-bridge = 'io.micrometer:micrometer-tracing-bridge-brave:1.0.3'
+micrometer-observation = 'io.micrometer:micrometer-observation:1.10.5'
+zipkin-reporter-brave = "io.zipkin.reporter2:zipkin-reporter-brave:2.16.3"
+
 

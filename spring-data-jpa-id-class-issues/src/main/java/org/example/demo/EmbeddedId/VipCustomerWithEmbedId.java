@@ -1,18 +1,18 @@
-package org.example.IdClass;
-
+package org.example.demo.EmbeddedId;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+
 @Entity
 @DiscriminatorValue("vip")
-public class VipCustomerWithIdClass extends CustomerWithIdClass {
+public class VipCustomerWithEmbedId extends CustomerWithEmbedId {
     private String vipNumber;
 
-    public VipCustomerWithIdClass() {
+    public VipCustomerWithEmbedId() {
     }
 
-    public VipCustomerWithIdClass(String firstName, String lastName, String vipNumber) {
+    public VipCustomerWithEmbedId(String firstName, String lastName, String vipNumber) {
         super(firstName, lastName);
         this.vipNumber = vipNumber;
     }

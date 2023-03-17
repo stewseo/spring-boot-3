@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "3.0.4"
+    id "io.spring.dependency-management" version "1.0.15.RELEASE"}
+
+group = 'org.example'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation buildLibs.spring.boot.starter.data.cassandra
+    implementation buildLibs.spring.boot.starter.web
+    implementation buildLibs.spring.boot.starter.actuator
+    implementation buildLibs.micrometer.observation
+    implementation buildLibs.micrometer.tracing.bridge
+
+    implementation buildLibs.zipkin.reporter.brave
+
+    testImplementation buildLibs.spring.boot.starter.test
+
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+bootJar {
+    enabled = true
+}
+
+// simplifies version management of test container dependencies across multiple sub-projects by ensuring all dependencies in the project are using the same version specified in the BOM.
+dependencyManagement {
+    imports {
+        mavenBom "org.testcontainers:testcontainers-bom:1.17.6"
+    }
+}
