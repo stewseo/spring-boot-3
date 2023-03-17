@@ -3,6 +3,7 @@ package org.example.demo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import org.example.demo.IdClass.CustomerWithIdClass;
 import org.example.demo.IdClass.VipCustomerWithIdClass;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
- * This test class tests the behavior of Hibernate when using an IdClass for a composite primary key with inheritance.
- * The main purpose of the tests is to identify issues with merging objects of a subclass with a composite primary key
- *  and to ensure that updates are properly executed instead of insert statements.
+ * Purpose: Identify issues with merging objects of a subclass with a composite primary key and ensure that updates are properly executed instead of insert statements.
+ * <p>
+ * Goal: Verify that Hibernate handles merging of objects with composite primary keys and inheritance properly, and to ensure that updates are correctly executed instead of insert statements when modifying and merging objects of a subclass.
  */
 @SpringBootTest
 @Testcontainers
@@ -27,9 +28,9 @@ class HibernateIdClassTests {
     // Create a PostgreSQL database container for testing purposes that ensures isolation and reproducibility
     @Container
     static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:9.6.12")
-        .withDatabaseName("demo")
-        .withUsername("postgres")
-        .withPassword("postgres");
+            .withDatabaseName("demo")
+            .withUsername("postgres")
+            .withPassword("postgres");
 
     // Adds dynamic properties to the Spring environment: the database URL, username, password, and hibernate.ddl-auto.
     @DynamicPropertySource
@@ -85,15 +86,6 @@ class HibernateIdClassTests {
 
     // Merges objects of the base class and a subclass with a composite primary key, and tests whether updates are properly executed instead of insert statements when modifying and merging the objects.
     private VipCustomerWithIdClass doStuff(EntityManager em) {
-//        CustomerWithIdClass customer = new CustomerWithIdClass("a", "b");
-//        customer.setVersionId(123L);
-//        customer.setUnitId(456L);
-//
-//        customer = entityManager.merge(customer);//merge object of base class, ok
-//
-//        customer.setFirstName("a2");
-//        customer = entityManager.merge(customer);//modify object of base class and merge again, ok
-
         VipCustomerWithIdClass vipCustomer = new VipCustomerWithIdClass("a", "b", "888");
         vipCustomer.setVersionId(987L);
         vipCustomer.setUnitId(654L);
@@ -107,5 +99,17 @@ class HibernateIdClassTests {
         vipCustomer = em.merge(vipCustomer);
 
         return vipCustomer;
+    }
+
+    private CustomerWithIdClass doStuffWithBaseClass(EntityManager em) {
+        CustomerWithIdClass customer = new CustomerWithIdClass("a", "b");
+        customer.setVersionId(123L);
+        customer.setUnitId(456L);
+
+        customer = entityManager.merge(customer);//merge object of base class, ok
+
+        customer.setFirstName("a2");
+        customer = entityManager.merge(customer);//modify object of base class and merge again, ok
+        return customer;
     }
 }

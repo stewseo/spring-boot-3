@@ -1,4 +1,4 @@
-## Going Native with Spring Boot
+~~## Going Native with Spring Boot
 
 #### This project's goal is to demonstrate how to:
 - Build native images using GraalVM. This is a faster, more efficient version of our application than we could ever build using the standard JVM.
@@ -77,4 +77,4 @@ To run our application on a cloud configuration based on Linux.
 ```
 ./gradlew :spring-boot-nativeimages:bootBuildImage
 ```
-- This process may take even longer than building the native application locally, but the benefit is that, when completed, we will have a fully baked Docker container with a native application in it.
+- This process may take even longer than building the native application locally, but the benefit is that, when completed, we will have a fully baked Docker container with a native application in it.~~

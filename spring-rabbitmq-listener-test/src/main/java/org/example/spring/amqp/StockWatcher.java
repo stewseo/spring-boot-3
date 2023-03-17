@@ -10,13 +10,22 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Behavior: This class has a method that listens for incoming stock trade messages using RabbitMQ messaging and adds the received trade information to a list of trades.
+ * Purpose: To monitor stock trades in real-time using RabbitMQ messaging and store trade information for future processing and analysis.
+ * Goal: To provide a centralized location for monitoring and analyzing incoming stock trade information.
+ */
 @Component
 public class StockWatcher {
 
     List<StockMovement> trades = new ArrayList<>();
 
-    // Target a Rabbit message listener on the specified bindings:
-    // queue, "stock-market" topic exchange, the binding key "*".
+    /**
+     * Marks this method as a message listener for RabbitMQ messages.
+     * The bindings parameter defines the exchange and queue binding details for the listener method.
+     * Whenever a message arrives on the specified exchange and queue, the annotated method is called, and the message is passed as an argument to the method.
+     * @param trade The StockMovement object received from RabbitMQ
+     */
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue, //

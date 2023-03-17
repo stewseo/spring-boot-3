@@ -2,15 +2,6 @@ plugins {
     id("com.gradle.enterprise") version("3.7.2")
 }
 
-
-rootProject.name = 'spring-boot-3'
-
-include 'spring-data-jpa-queries',
-        'spring-security-methodlevel','spring-security-oauth2',
-        'spring-boot-tests', 'db-migration-tests', 'spring-amqplistener-tests',
-        'spring-boot-configuration', 'spring-boot-application-release', 'spring-boot-nativeimage',
-        'spring-boot-webflux', 'spring-boot-r2dbc', 'spring-boot-webapplication', 'spring-data-jpa-id-class-issues'
-
 dependencyResolutionManagement {
     versionCatalogs {
         buildLibs {
@@ -25,5 +16,20 @@ gradleEnterprise {
         termsOfServiceAgree = "yes"
     }
 }
-include 'spring-data-cassandra-observability'
 
+rootProject.name = 'spring-boot-3'
+
+include 'spring-data-jpa-queries',
+        'spring-method-level-security',
+        'spring-security-oauth2',
+        'spring-boot-tests',
+        'spring-data-jpa-integration-testing',
+        'spring-rabbitmq-listener-test',
+        'spring-boot-configuration-management',
+        'spring-boot-release-management',
+        'spring-native-image-build',
+        'web-api-spring-webflux',
+        'spring-boot-r2dbc-integration',
+        'spring-boot-webapplication',
+        'spring-data-jpa-id-class-issues',
+        'spring-data-cassandra-observability'

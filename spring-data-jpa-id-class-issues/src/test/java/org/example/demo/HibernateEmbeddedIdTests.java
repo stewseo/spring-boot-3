@@ -1,6 +1,7 @@
 package org.example.demo;
 
 import jakarta.persistence.EntityManager;
+import org.example.demo.EmbeddedId.CustomerWithEmbedId;
 import org.example.demo.EmbeddedId.VipCustomerWithEmbedId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,20 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-
+/**
+ * Purpose: Verify the proper functionality of the Hibernate ORM framework in conjunction with the PostgreSQL database and embedded ID annotations.
+ * <p>
+ * Goal: Ensure that the Hibernate ORM framework is correctly configured and that the database is properly accessed and modified by testing the functionality of the methods used to save and modify objects of the subclasses and base class.
+ */
 @SpringBootTest
 @Testcontainers
 class HibernateEmbeddedIdTests {
 
     @Container
     static PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:9.6.12")
-        .withDatabaseName("demo")
-        .withUsername("postgres")
-        .withPassword("password");
+            .withDatabaseName("demo")
+            .withUsername("postgres")
+            .withPassword("password");
 
     @DynamicPropertySource
     static void postgresProperties(DynamicPropertyRegistry registry) {
@@ -48,14 +53,7 @@ class HibernateEmbeddedIdTests {
     }
 
     private VipCustomerWithEmbedId doStuff() {
-//        CustomerWithEmbedId customer = new CustomerWithEmbedId("a", "b");
-//        customer.setVersionId(123L);
-//        customer.setUnitId(456L);
-//
-//        customer = entityManager.merge(customer);  //save object of base class, ok
-//
-//        customer.setFirstName("a2");
-//        customer = entityManager.merge(customer);//modify object of base class and save again, ok
+
 
         VipCustomerWithEmbedId vipCustomer = new VipCustomerWithEmbedId("a", "b", "888");
         vipCustomer.setVersionId(987L);
@@ -68,5 +66,18 @@ class HibernateEmbeddedIdTests {
         // using embedded id annotation, all 4 times of saving to db ok, for both pg and mysql
 
         return vipCustomer;
+    }
+
+    private CustomerWithEmbedId doStuffUsingBaseClass() {
+        CustomerWithEmbedId customer = new CustomerWithEmbedId("a", "b");
+        customer.setVersionId(123L);
+        customer.setUnitId(456L);
+
+        customer = entityManager.merge(customer);  //save object of base class, ok
+
+        customer.setFirstName("a2");
+        customer = entityManager.merge(customer);//modify object of base class and save again, ok
+
+        return customer;
     }
 }

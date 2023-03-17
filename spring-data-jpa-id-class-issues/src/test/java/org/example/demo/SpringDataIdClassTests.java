@@ -15,8 +15,9 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
- * The purpose of this test class is to examine how objects with composite primary keys using IdClass are saved and modified in a Spring Data JPA application,
- * and to investigate their behavior under different transactional contexts.
+ * Purpose: Investigate and solve an issue that arises when saving a modified subclass object with a composite primary key using IdClass, which results in a primary key conflict with an INSERT statement instead of an UPDATE statement.
+ * <p>
+ * Goal: Ensure that objects with composite primary keys using IdClass can be saved and modified correctly, and to resolve the identified issue.
  */
 @SpringBootTest
 @Testcontainers
