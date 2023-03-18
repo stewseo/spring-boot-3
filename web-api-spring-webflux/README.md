@@ -30,12 +30,12 @@ public class ApiController {
 
   // maps HTTP GET /api/employeesweb calls onto this method
   // Flux is Reactor’s implementation of Publisher and provides reactive operators
-  // returns a Flux of Employee records
+  // returns a Flux of org.example.springdatacassandraobservability.Employee records
   @GetMapping("/api/employees")
-  Flux<Employee> employees() {
+  Flux<org.example.springdatacassandraobservability.Employee> employees() {
     return Flux.just( //
-            new Employee("alice", "management"), //
-            new Employee("bob", "payroll"));
+            new org.example.springdatacassandraobservability.Employee("alice", "management"), //
+            new org.example.springdatacassandraobservability.Employee("bob", "payroll"));
   }
 }
 ```
@@ -44,9 +44,9 @@ public class ApiController {
 ```java
   // maps HTTP POST /api/employees web calls to this method
   // Wraps incoming data inside Reactor’s alternative to Flux for a single item, Mono.
-  // returns a Mono<Employee>, the single-item counterpart to a Reactor Flux
+  // returns a Mono<org.example.springdatacassandraobservability.Employee>, the single-item counterpart to a Reactor Flux
   @PostMapping("/api/employees")
-  Mono<Employee> add(@RequestBody Mono<Employee> newEmployee) {
+  Mono<org.example.springdatacassandraobservability.Employee> add(@RequestBody Mono<org.example.springdatacassandraobservability.Employee> newEmployee) {
     return newEmployee //
       .map(employee -> {
         DATABASE.put(employee.name(), employee);
@@ -64,9 +64,9 @@ public class ApiController {
 public class HomeController {
 
   // Maps GET / web calls onto this method.
-  // Wraps a Java list of Employee objects(canned data stored in java map) into a Flux using fromIterable
-  // Transforms List<Employee> into a Rendering, while keeping everything inside this Mono
-  //  by unpacking the original Mono<List<Employee>> and using the results to create a new Mono<Rendering>
+  // Wraps a Java list of org.example.springdatacassandraobservability.Employee objects(canned data stored in java map) into a Flux using fromIterable
+  // Transforms List<org.example.springdatacassandraobservability.Employee> into a Rendering, while keeping everything inside this Mono
+  //  by unpacking the original Mono<List<org.example.springdatacassandraobservability.Employee>> and using the results to create a new Mono<Rendering>
   // returns Mono<Rendering>: Reactor’s single-valued reactive type
   @GetMapping("/")
   Mono<Rendering> index() {
@@ -75,7 +75,7 @@ public class HomeController {
             .map(employees -> Rendering //
                     .view("index") //
                     .modelAttribute("employees", employees) //
-                    .modelAttribute("newEmployee", new Employee("", "")) //
+                    .modelAttribute("newEmployee", new org.example.springdatacassandraobservability.Employee("", "")) //
                     .build());
   }
 ```

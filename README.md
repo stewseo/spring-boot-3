@@ -84,3 +84,14 @@ This repository is composed of several sub-projects, each utilizing Spring Boot 
 - Ensure seamless integration between components by performing integration tests between:
   - A component responsible for publishing messages to a RabbitMQ exchange.
   - An AMQP listener that consumes messages from a RabbitMQ queue. The queue will be bound to the exchange to facilitate communication between the two components.
+
+### spring-data-cassandra-observability's core purpose is to demonstrate observability in a Spring Data Cassandra application.
+The project aims to:
+- Demonstrate the usage of Micrometer for measuring various aspects of a Spring Data Cassandra application.
+- Demonstrate the creation of observability points in a Spring Data Cassandra application using Micrometer.
+- Provide functional examples of all essential components of our Spring Data Cassandra application:
+  - An application that utilizes observability points to measure different performance aspects.
+  - A configuration class that establishes a connection to Cassandra for the Spring Data Cassandra application.
+  - A controller class that manages HTTP requests in the Spring Data Cassandra application.
+  - A repository class that handles interactions with the Cassandra database in the Spring Data Cassandra application.
+  - An entity class that represents data in the Cassandra database for the Spring Data Cassandra application.

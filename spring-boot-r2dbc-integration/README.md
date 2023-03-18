@@ -31,14 +31,14 @@ By taking such an expensive operation off the table, reactive applications can i
 * - Spring Data Commons’ base interface for any reactive repository, ReactiveCrudRepository as it's parent interface<br>
 * - The domain and primary key’s type for this repository
     */
-    public interface EmployeeRepository extends ReactiveCrudRepository<Employee, Long> {}
+    public interface org.example.springdatacassandraobservability.EmployeeRepository extends ReactiveCrudRepository<org.example.springdatacassandraobservability.Employee, Long> {}
 ```
 
 ```java
 /**
-* This class defines our domain’s type, as required in the EmployeeRepository declaration.
+* This class defines our domain’s type, as required in the org.example.springdatacassandraobservability.EmployeeRepository declaration.
   */
-  public class Employee {
+  public class org.example.springdatacassandraobservability.Employee {
   /**
   * The primary key of type Long is denoted by Spring Data Commons’ annotation, @Id.<br>
   *  Note that this is NOT JPA’s jakarta.persistence.Id annotation but instead a Spring Data-specific annotation.
@@ -46,7 +46,7 @@ By taking such an expensive operation off the table, reactive applications can i
      private @Id Long id;
      private String name;
      private String role;
-public Employee(String name, String role) {
+public org.example.springdatacassandraobservability.Employee(String name, String role) {
 this.name = name;
 this.role = role;
 }
@@ -70,14 +70,14 @@ this.role = role;
 ```java
 /**
  * This controller class directly serializes request mapping outputs to the HTML response, instead of processing templates.<br>
- * Injects the EmployeeRepository through constructor injection<br>
+ * Injects the org.example.springdatacassandraobservability.EmployeeRepository through constructor injection<br>
  */
 @RestController
 public class ApiController {
 
-  private final EmployeeRepository repository;
+  private final org.example.springdatacassandraobservability.EmployeeRepository repository;
 
-  public ApiController(EmployeeRepository repository) {
+  public ApiController(org.example.springdatacassandraobservability.EmployeeRepository repository) {
     this.repository = repository;
   }
 
@@ -86,21 +86,21 @@ public class ApiController {
    * @return all data using the prebuilt findAll method from Spring Data Commons’ ReactiveCrudRepository interface.
    */
   @GetMapping("/api/employees")
-  Flux<Employee> employees() {
+  Flux<org.example.springdatacassandraobservability.Employee> employees() {
     return repository.findAll();
   }
 
   /**
    * Maps HTTP POST /api/employees calls to this method.
-   * @param newEmployee processes and deserializes the incoming request body into an Employee object only when the system is ready.<p>
+   * @param newEmployee processes and deserializes the incoming request body into an org.example.springdatacassandraobservability.Employee object only when the system is ready.<p>
    *                    Ensures a completely new entry will be made to the database
-   * @return the result Mono<Employee> from the executed save operation with a newly created Employee object inside. This new object includes a fresh id field.
+   * @return the result Mono<org.example.springdatacassandraobservability.Employee> from the executed save operation with a newly created org.example.springdatacassandraobservability.Employee object inside. This new object includes a fresh id field.
    */
 
   @PostMapping("/api/employees")
-  Mono<Employee> add(@RequestBody Mono<Employee> newEmployee) {
+  Mono<org.example.springdatacassandraobservability.Employee> add(@RequestBody Mono<org.example.springdatacassandraobservability.Employee> newEmployee) {
     return newEmployee.flatMap(e -> {
-      Employee employeeToLoad = new Employee(e.getName(), e.getRole());
+      org.example.springdatacassandraobservability.Employee employeeToLoad = new org.example.springdatacassandraobservability.Employee(e.getName(), e.getRole());
       return repository.save(employeeToLoad);
     });
   }
@@ -113,16 +113,16 @@ public class ApiController {
 ```java
 /**
  * This controller class is focused on rendering templates.<p>
- * EmployeeRepository is injected into this controller using constructor injection.
+ * org.example.springdatacassandraobservability.EmployeeRepository is injected into this controller using constructor injection.
  */
 @Controller
 public class HomeController {
 ```
 
-#### Generate the web template served up at the root of our domain with data returned by EmployeeRepository's findAll() method:
+#### Generate the web template served up at the root of our domain with data returned by org.example.springdatacassandraobservability.EmployeeRepository's findAll() method:
 ```java
   /**
-   * Uses the Flux returned from EmployeeRepository's findAll() method to gather a stream of items into Mono<List<Employee>>
+   * Uses the Flux returned from org.example.springdatacassandraobservability.EmployeeRepository's findAll() method to gather a stream of items into Mono<List<org.example.springdatacassandraobservability.Employee>>
    * Invokes the map operation to access the list inside that Mono where we then transform it into a Rendering.
    * @return the constructed Mono<Rendering> through the build() step that transforms all the pieces into a final, immutable instance.
    */
@@ -133,24 +133,24 @@ public class HomeController {
       .map(employees -> Rendering //
         .view("index") //
         .modelAttribute("employees", employees) //
-        .modelAttribute("newEmployee", new Employee("", "")) //
+        .modelAttribute("newEmployee", new org.example.springdatacassandraobservability.Employee("", "")) //
         .build());
   }
 ```
 
-#### Process that form-backed Employee bean in a POST-based web method:
+#### Process that form-backed org.example.springdatacassandraobservability.Employee bean in a POST-based web method:
 ```java
   /**
-   * @param newEmployee Extracts the name and role from the incoming Employee object but ignores any possible id value, since we’re inserting a new entry.<p>
-   *                    Flattens/flatMaps the Mono<Employee> results returned by our repository’s save() method.
-   *                    Translates the saved Employee object into a redirect request.
+   * @param newEmployee Extracts the name and role from the incoming org.example.springdatacassandraobservability.Employee object but ignores any possible id value, since we’re inserting a new entry.<p>
+   *                    Flattens/flatMaps the Mono<org.example.springdatacassandraobservability.Employee> results returned by our repository’s save() method.
+   *                    Translates the saved org.example.springdatacassandraobservability.Employee object into a redirect request.
    * @return Mono<String> 
    */
   @PostMapping("/new-employee")
-  Mono<String> newEmployee(@ModelAttribute Mono<Employee> newEmployee) {
+  Mono<String> newEmployee(@ModelAttribute Mono<org.example.springdatacassandraobservability.Employee> newEmployee) {
     return newEmployee //
       .flatMap(e -> {
-        Employee employeeToSave = new Employee(e.getName(), e.getRole());
+        org.example.springdatacassandraobservability.Employee employeeToSave = new org.example.springdatacassandraobservability.Employee(e.getName(), e.getRole());
         return repository.save(employeeToSave);
       }) //
       .map(employee -> "redirect:/");
