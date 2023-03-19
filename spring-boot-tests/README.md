@@ -1,55 +1,76 @@
-## Testing Spring Boot 3 Applications
+**## Testing Spring Boot 3 Applications
 
 ### Primary Purpose:
-- Demonstrate how to use Mockito to create and manage mock objects for testing Spring Boot data repositories through test cases that validate the behavior of service layer methods that depend on them, as exemplified by the provided code snippet testing the VideoService class methods interacting with a VideoRepository.
+- Provide examples of how to demonstrate how to test various components of Spring Boot applications, including data repositories, web controllers, and security policies, using various techniques such as mocks, embedded databases, and containerized databases.
 
 ### Functional Goals:
-- Test the implementation of VideoService class for:
-  - Retrieving all videos from the repository.
-  - Searching videos in the repository based on specific criteria.
-  - Creating a new video in the repository.
+- To ensure that the data repositories are being tested properly by using mocks, embedded databases, and containerized databases in a Spring Boot application.
+- To test web controllers using MockMVC to verify the response of the application to various requests.
+- To test the security policies of a Spring Boot application to ensure that the application is secure and meets the desired security standards.
 
 ### Behavioral Goals:
-- Ensure that the VideoService class can properly handle a scenario where:
-  - the repository returns a list of videos when retrieving all videos.
-  - the repository returns a subset of videos when searching for videos.
-  - a new video is created and added to the repository.
+- Demonstrate and explain how to 
+- test data repositories using mocks, embedded databases, and containerized databases
+- use MockMVC to test web controllers and endpoints
+- test security policies in Spring Boot applications
 
-### Test-scoped dependencies that spring-boot-starter-test contains:
-- Spring Boot Test: Spring Boot-oriented test utilities
-- JSONPath: The query language for JSON documents
-- AssertJ: Fluent API for asserting results
-- Hamcrest: Library of matchers
-- JUnit 5: Cornerstone library for writing test cases
-- Mockito: Mocking framework for building test cases
-- JSONassert: Library of assertions aimed at JSON documents
-- Spring Test: Spring Framework’s test utilities
-- XMLUnit: Toolkit for verifying XML documents
+### Creating tests for our domain objects
+#### Primary purpose:
+#### Functional goals:
+#### Behavioral goals:
 
+### Testing web controllers using MockMVC
+#### Primary purpose:
+#### Functional goals:
+#### Behavioral goals:
 
-### Creating domain-based test cases
-- Writing unit-level tests against a domain class
+### Testing data repositories with mocks
+#### Primary purpose
+#### Functional Goals:
+#### Behavioral Goals:
 
-### Verifying our web controller
-- Testing our web controller with MockMVC
-- Leveraging Spring Boot Test’s slice-based @WebMvcTest annotation
-- Proving fundamental controller behavior quickly
+  
+### Testing data repositories with embedded databases
+#### Primary purpose
+- Demonstrate how to write automated tests for data repositories using an embedded database with Spring Boot's testing framework, and to provide examples of different test methods that can be used to validate the functionality of data repository methods.
 
-### Verifying our Service Layer
-- Testing data repositories with mocks
-  - Unit-based tests for the service layer that the web controller invokes.
-  - Isolating the VideoService bean from any outside influences by mocking VideoService's one collaborator, VideoRepository.
-  - Capturing intent through stubbing and verifying against test data.
-  - Capturing behavior with mocking and verifying that the right methods were called.
+#### Functional Goals:
+- Verify that findAll() method returns all the videos in the repository.
+- Verify that findByNameContainsIgnoreCase() method returns a video with a name containing the given string.
+- Verify that findByNameContainsOrDescriptionContainsAllIgnoreCase() method returns videos whose names or descriptions contain the given strings.
 
-### Verifying our Repository Layer
-- Testing data repositories
-  - With embedded databases
-    - Test cases against an in-memory database concerning our application
-      - The database that runs in the same memory space as our application: HyperSQL Database (HSQLDB)
-    - Verify that we have written the correct queries, using custom finders, query by example, or any other strategies we wish to leverage.
-  - Using containerized databases
-    - Test cases that ensure that our data repository properly interacts with the database.
-    - Test cases that verify our design of case-insensitive queries against various fields supports our service layer
-### Verifying security policies with Spring Security Test
-- Ensure our security policies are properly shaken out with both unauthorized and fully authorized users
+#### Behavioral Goals:
+- The findAllShouldProduceAllVideos() test method should assert that the size of the result list returned by findAll() is equal to 3.
+- The findByNameShouldRetrieveOneEntry() test method should assert that the size of the result list returned by findByNameContainsIgnoreCase() is equal to 1 and that the name field of the returned video is equal to "Need HELP with your SPRING BOOT 3 App?".
+- The findByNameOrDescriptionShouldFindTwo() test method should assert that the size of the result list returned by findByNameContainsOrDescriptionContainsAllIgnoreCase() is equal to 2 and that the description field of the returned videos contains the strings "As a pro developer, never ever EVER do this to your code" and "Discover ways to not only debug your code".
+
+### Testing data repositories using containerized databases
+#### Primary purpose:
+- Demonstrate how to test security policies in Spring Boot applications using the @WebMvcTest annotation, MockMvc, and Spring Security's @WithMockUser annotation.
+
+#### Functional Goals:
+- Define a process for testing data repositories using containerized databases.
+- Inject the application's real Spring Data repository for testing.
+- Store a list of VideoEntity objects in the database to verify its behavior.
+
+#### Behavioral Goals:
+- These goals describe what the code should accomplish in terms of user behavior.
+- Verify that the findAll() method correctly returns all three entities stored in the database.
+- Verify that the custom finder supporting the search feature is working as intended.
+- Verify that the custom finder with a method name of length 52 is functioning correctly.
+
+### Testing security policies
+#### Primary purpose: 
+- Demonstrate how to test security policies in Spring Boot applications using the @WebMvcTest annotation, MockMvc, and Spring Security's @WithMockUser annotation.
+
+#### Functional goals:
+- Provide tests that verify specific user roles and their access to the home page, ensuring that the required functionality is properly tested.
+  - Verify that unauthenticated users are denied access to the home page.
+  - Verify that authenticated users with the role "USER" can access the home page.
+  - Verify that authenticated users with the role "ADMIN" can access the home page.
+
+#### Behavioral goals:
+- Goals that specify the expected behavior of the tests when attempting to access the home page with different user roles, including the expected HTTP response codes.
+  - For unauthenticated users, the test should expect an HTTP 401 Unauthorized error code when attempting to access the home page
+  - For authenticated users with the role "USER", the test should expect an HTTP 200 Ok code when attempting to access the home page
+  - For authenticated users with the role "ADMIN", the test should expect an HTTP 200 Ok code when attempting to access the home page

@@ -39,10 +39,16 @@ This repository is composed of several sub-projects, each utilizing Spring Boot 
 - Demonstrate how to use Mockito to create and manage mock objects for testing Spring Boot data repositories through test cases that validate the behavior of service layer methods that depend on them, as exemplified by the provided code snippet testing the VideoService class methods interacting with a VideoRepository.
 
 #### Functional Goals:
-- Test the implementation of a video service.
+- Ensure that
+  - Data repositories are functioning correctly by testing them with mocks, embedded databases, and containerized databases.
+  - Web controllers are correctly handling HTTP requests and responses by testing them using MockMVC.
+  - Security policies are properly implemented and enforced by testing them in a controlled environment.
 
 #### Behavioral Goals:
-- Ensure that the video service can properly handle various scenarios.
+- Understand how to
+  - Effectively test data repositories using various techniques such as mocks, embedded databases, and containerized databases.
+  - Use MockMVC to test web controllers and endpoints for Spring Boot applications.
+  - Test security policies in Spring Boot applications and ensure the application is secure against unauthorized access.
 
 ### spring-boot-configuration-management
 - Externalize parts of our system from content that appears in the web layer to the list of users allowed to authenticate with the system.
