@@ -18,22 +18,31 @@ This repository is composed of several sub-projects, each utilizing Spring Boot 
 - Use Java 17 records to quickly assemble DTOs that can be used to ferry form requests into web methods and onto VideoService to simplify development.
 - Assess when it makes sense to use different querying tactics by understanding the trade-offs and benefits of each approach.
 
-### spring-security-methodlevel
-- Explain the benefits of method-level security and how to implement it using Spring Security
-- Implement method-level security using Spring Security and enable it to provide more granular security to Spring Data methods by:
-  - Creating a security protocol that restricts the deletion of videos to their respective uploaders.
-  - Assigning ownership to VideoEntity objects in a POST request that creates new entries.
-  - Rendering a delete button for each video along with its name in our mustache template, enabling users to delete the videos they own.
+### spring-method-level-security's primary purpose is to provide more granular security to Spring Data methods by implementing method-level security using Spring Security.
+#### Functional Goals:
+- Implement security for individual methods in a Spring Boot application using Spring Security's @Secured annotation.
+- Verify that only users with appropriate roles can access secured methods.
+- Test that users without appropriate roles are denied access to secured methods.
+
+#### Behavioral Goals:
+- Ensure that the application behaves correctly when securing methods with Spring Security.
+- Verify that appropriate error messages are displayed to users who are denied access to secured methods.
+- Verify that secured methods can still be accessed by users with appropriate roles.
 
 ### spring-security-oauth2
 - Outsource user management to Google using Spring Security’s OAuth2 integration.
 - Take advantage of this by grabbing hold of some YouTube data and serve up video links.
 
-### spring-boot-tests
-- Test different aspects of our application through simple, midgrade, and complex tests.
-- Explain the various tradeoffs of each tactic.
-    - Using real database engines if we’re willing to spend the extra runtime.
-- Ensure our security policies are properly shaken out with both unauthorized and fully authorized users.
+### spring-boot-testing
+
+#### Primary Purpose:
+- Demonstrate how to use Mockito to create and manage mock objects for testing Spring Boot data repositories through test cases that validate the behavior of service layer methods that depend on them, as exemplified by the provided code snippet testing the VideoService class methods interacting with a VideoRepository.
+
+#### Functional Goals:
+- Test the implementation of a video service.
+
+#### Behavioral Goals:
+- Ensure that the video service can properly handle various scenarios.
 
 ### spring-boot-configuration-management
 - Externalize parts of our system from content that appears in the web layer to the list of users allowed to authenticate with the system.

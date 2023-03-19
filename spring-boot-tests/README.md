@@ -1,4 +1,19 @@
-## Verifying an application with Spring Boot 3
+## Testing Spring Boot 3 Applications
+
+### Primary Purpose:
+- Demonstrate how to use Mockito to create and manage mock objects for testing Spring Boot data repositories through test cases that validate the behavior of service layer methods that depend on them, as exemplified by the provided code snippet testing the VideoService class methods interacting with a VideoRepository.
+
+### Functional Goals:
+- Test the implementation of VideoService class for:
+  - Retrieving all videos from the repository.
+  - Searching videos in the repository based on specific criteria.
+  - Creating a new video in the repository.
+
+### Behavioral Goals:
+- Ensure that the VideoService class can properly handle a scenario where:
+  - the repository returns a list of videos when retrieving all videos.
+  - the repository returns a subset of videos when searching for videos.
+  - a new video is created and added to the repository.
 
 ### Test-scoped dependencies that spring-boot-starter-test contains:
 - Spring Boot Test: Spring Boot-oriented test utilities
