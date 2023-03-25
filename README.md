@@ -3,60 +3,76 @@
 This repository is composed of several sub-projects, each utilizing Spring Boot 3 with distinct goals and objectives. Here is a brief overview of the high-level objectives of each sub-project:
 
 ### spring-boot-webapplication
-- Develop a Spring Boot web application that can serve dynamic content and interact with third-party apps through a JSON-based API by:
-  - Injecting demo data using a service to populate the dynamic content on the web pages.
-  - Creating a web controller that uses Mustache, a templating engine, to render dynamic content based on the demo data. The controller will retrieve the data from the service and pass it to the Mustache templates to render the web pages.
-  - Creating a JSON-based API that allows third-party apps to interact with the web application.
-  - Leveraging Node.js to introduce some JavaScript to our web application allowing for additional functionality to be added to the application, such as client-side scripting or server-side logic.
+
+#### Purpose: 
+- To demonstrate how to create a web application using Spring Boot, including creating a Spring MVC web controller, leveraging templates to create content, creating JSON-based APIs, and integrating Node.js into a Spring Boot web app.
+
+#### High-level functional goal:
+- Develop a web application using Spring Boot that can handle HTTP requests, serve dynamic content in web pages, and design RESTful APIs that return JSON-formatted data. Integrate Node.js to enable server-side rendering and serving client-side JavaScript apps.
+
+#### High-Level Behavioral Goal:
+- Build a flexible and maintainable web application using Spring Boot that provides APIs and allows for the integration of external technologies such as Node.js, to enhance its functionality and flexibility. This will involve leveraging Spring Boot's features, such as automatic web controller registration, embedded servlet container management, JSON serialization/deserialization, and Mustache templates for separating presentation and business logic layers.
 
 ### spring-data-jpa-queries
-- Query for data using Spring Data JPA:
-  - Writing custom finders.
-  - Using Query By Example.
-  - Directly accessing the data store using custom JPQL and SQL.
-- Hook variations of queries into search boxes.
-- Use Java 17 records to quickly assemble DTOs that can be used to ferry form requests into web methods and onto VideoService to simplify development.
-- Assess when it makes sense to use different querying tactics by understanding the trade-offs and benefits of each approach.
+#### Purpose:
+- To provide a practical example of querying and manipulating data with Spring Boot, covering topics such as DTOs, entities, POJOs, Spring Data repositories, custom finders, Query By Example, and custom JPA queries.
 
-### spring-method-level-security's primary purpose is to provide more granular security to Spring Data methods by implementing method-level security using Spring Security.
-#### Functional Goals:
-- Implement security for individual methods in a Spring Boot application using Spring Security's @Secured annotation.
-- Verify that only users with appropriate roles can access secured methods.
-- Test that users without appropriate roles are denied access to secured methods.
+#### High-level Behavioral Goal
+- Efficiently manage and manipulate data within the application using Spring Data JPA, by designing and implementing a system that handles data effectively.
 
-#### Behavioral Goals:
-- Ensure that the application behaves correctly when securing methods with Spring Security.
-- Verify that appropriate error messages are displayed to users who are denied access to secured methods.
-- Verify that secured methods can still be accessed by users with appropriate roles.
+#### High-level Functional Goal
+- Effectively manage and manipulate data within the application context using Spring Data JPA, incorporating specific techniques and structures such as DTOs, POJOs, entities, custom finders, Query By Example, and custom JPA queries and specifications.
+
+### spring-method-level-security
+Purpose:
+- To demonstrate how to secure a Spring Boot web application by locking down access to the owner of the data, enabling method-level security, and displaying user details on the site using Spring Security and Thymeleaf t`emplates. The code provides practical examples and instructions for implementing security measures to protect an application from unauthorized access and malicious attacks.
+
+High-level functional goal:
+- Develop a secure and user-friendly web application with robust security features, such as role-based authentication and authorization, method-level security, and user details display capabilities, to restrict unauthorized access to sensitive information while allowing users to manage their account and access information.
+
+High-Level Behavioral Goal:
+- Demonstrate the implementation of various security features in a web application using Spring Boot, emphasizing method-level security, authentication and authorization, and security monitoring and management through Spring Boot Actuator
 
 ### spring-security-oauth2
-- Outsource user management to Google using Spring Security’s OAuth2 integration.
-- Take advantage of this by grabbing hold of some YouTube data and serve up video links.
+
+### Primary Purpose:
+- To demonstrate how to configure a Spring Boot application for Google OAuth2 authentication, access protected resources on a remote server with obtained OAuth2 credentials, and create a secure web application using OAuth2 authentication and the Spring Security framework, providing a practical example of leveraging Spring Boot for industry-standard authentication mechanisms.
+
+### High-level functional goal:
+- Develop a secure web application with Spring Boot that implements OAuth2 authentication to protect resources and allows authenticated users to access them via REST API calls.
+
+### High-Level Behavioral Goal:
+- To enhance application security by implementing OAuth2 authentication and authorization mechanisms, allowing secure user access and interaction with protected resources through configuration of the application with an external authentication provider, integration of the Spring Security framework, and utilization of obtained OAuth2 credentials for authentication and authorization.
 
 ### spring-boot-testing
 
-#### Primary Purpose:
-- Demonstrate how to use Mockito to create and manage mock objects for testing Spring Boot data repositories through test cases that validate the behavior of service layer methods that depend on them, as exemplified by the provided code snippet testing the VideoService class methods interacting with a VideoRepository.
+#### Purpose:
+- Provide examples demonstrating how to effectively test different aspects of a Spring Boot application, including creating domain-based test cases, testing web controllers using MockMVC, testing data repositories with mocks, embedded databases, and containerized databases, and testing security policies with Spring Security Test.
 
 #### Functional Goals:
-- Ensure that
-  - Data repositories are functioning correctly by testing them with mocks, embedded databases, and containerized databases.
-  - Web controllers are correctly handling HTTP requests and responses by testing them using MockMVC.
-  - Security policies are properly implemented and enforced by testing them in a controlled environment.
+- Demonstrate different types of tests to evaluate various aspects of an application is to improve the efficiency and effectiveness of the testing process by focusing on testing the specific functionality of the code.
+- Create domain-based test cases is to test the specific functionality of the code related to different domains within the application, ensuring that they operate as expected.
+- using MockMVC to test web controllers' handling of HTTP requests and responses is to verify the code's specific functionality related to request and response handling and ensure the proper operation of the web controllers.
 
 #### Behavioral Goals:
-- Understand how to
-  - Effectively test data repositories using various techniques such as mocks, embedded databases, and containerized databases.
-  - Use MockMVC to test web controllers and endpoints for Spring Boot applications.
-  - Test security policies in Spring Boot applications and ensure the application is secure against unauthorized access.
+- Write tests to evaluate various aspects of an application is to focus on the code's behavior in response to different test types, including simple, midgrade, and complex, rather than on any specific functionality of the code.
+- Create domain-based test cases is to evaluate how the code behaves in response to specific input and output related to different domains within the application.
+- Test web controllers with MockMVC to simulate HTTP requests and responses is to observe how the code behaves in response to these requests and responses.
 
 ### spring-boot-configuration-management
-- Externalize parts of our system from content that appears in the web layer to the list of users allowed to authenticate with the system.
-- Create type-safe configuration classes, bootstrap them from property files, and then inject them into parts of our application.
-- Use profile-based properties and choose between using traditional Java property files or using YAML
-- Override property settings from the command line
+#### Purpose:
+- Showcase how to configure a Spring Boot application by externalizing the configuration, defining configurations specific to various environments, managing them using profiles, and loading configurations from external sources, in order to make the application more adaptable, maintainable, and scalable across different environments.
+
+#### Functional Goal:
+- Enable the definition of environment-specific configurations through property files, the configuration of applications using properties and YAML files, the management of various profiles for different environments, and the loading of external configurations
+
+#### Behavioral Goal:
+- Demonstrate the management of an application's behavior in various environments, highlighting the use of profiles to create behavior, and loading configurations from external sources to manage application behavior.
 
 ### spring-boot-release-management
+#### Purpose:
+#### Functional Goal:
+#### Behavioral Goal:
 - Turn our application from a collection of code into an executable, ready for any production environment, including the cloud:
   - Creating an uber JAR that is runnable anywhere.
   - Baking a Docker container image that can be run locally with no need for Java.
@@ -65,27 +81,43 @@ This repository is composed of several sub-projects, each utilizing Spring Boot 
   - Running multiple instances of our uber JAR pointed at a persistent database, different than the one it came bundled with.
 
 ### spring-native-image-build
-- Build native images using GraalVM. This is a faster, more efficient version of our application than we could ever build using the standard JVM.
-  - Retrofit our application for GraalVM
-  - Run our native Spring Boot application inside GraalVM
-- Bake native images into a Docker container using Paketo Buildpacks.
-  - Bake a Docker container with GraalVM
+#### Purpose:
+- Provide a practical guide for retrofitting, running, and building native images of a Spring Boot application inside GraalVM, as well as creating a Docker container with GraalVM and Paketo Buildpacks.
+
+#### Functional  Goals:
+- Modify the code of the Spring Boot application to be compatible with GraalVM and use it.
+- Execute the Spring Boot application natively in GraalVM is to optimize its performance and reduce memory usage. 
+- Optimize the Spring Boot application's performance and reducing its attack surface by building and packaging native images in a Docker container using GraalVM and Paketo Buildpacks.
+
+#### Behavioral Goals:
+Gain knowledge and experience 
+- in retrofitting applications for GraalVM by understanding this technique.
+- with the GraalVM environment by running a native Spring Boot application inside it.
+- in optimizing application performance and reducing memory usage by learning to build native images using GraalVM.
 
 ### web-api-spring-webflux
-- Create a reactive application using Project Reactor.
-- Roll out reactive web methods to both serve and consume JSON.
-- Leverage Thymeleaf to reactively generate HTML and consume an HTML form.
-- Reactively generate a hypermedia-aware API using Spring HATEOAS.
+#### Purpose:
+- Demonstrate effective implementation of reactive programming in Spring Boot applications through the creation of reactive web controllers, serving and consuming data reactively with Spring WebFlux, and using reactive templating engines to create hypermedia.
+#### High-level Functional Goal:
+- "Develop a Spring Boot application that uses reactive programming techniques to enhance its performance and responsiveness."
+#### High-level Behavioral Goal:
+- "Gain proficiency in applying reactive programming principles and techniques in software development to improve performance and create a reactive, easily navigable API."
 
 ### spring-boot-r2dbc-integration
-- Explain what it means to fetch data reactively.
-- Build an introductory reactive Spring Boot application.
-  - Leverage Spring Data to help manage our content.
-  - Create a reactive data repository, Spring Data Commons’ base interface for any reactive repository, ReactiveCrudRepository.
-  - Load test data by injecting a copy of our Spring Data R2DBC bean(R2dbcEntityTemplate) to the application's context.
-  - Return data reactively to our API controller that will be used to generate our web template served up at the root of our domain.
+
+#### Purpose:
+- Demonstrate how to work with data reactively using Spring Boot. This involves understanding reactive programming concepts, selecting a reactive data store, creating a reactive data repository with Spring Data, and using R2DBC for reactive SQL database interactions.
+
+#### High-level Functional Goal:
+- evaluate and select an appropriate reactive data store based on its performance and features, in order to support the implementation of reactive programming and reactive streams for asynchronous and reactive data fetching, emphasizing the importance of the selection process.
+
+#### High-level Behavioral Goal:
+- Implement reactive programming techniques and use reactive streams to fetch data asynchronously and reactively, replacing traditional imperative programming techniques with a focus on the implementation process.
 
 ### spring-data-jpa-integration-testing
+#### Purpose:
+#### Functional Goal:
+#### Behavioral Goal:
 - Create a database schema that describes how to construct our database, then:
   - Validate Entity Mappings.
   - Verify Constraints.
@@ -96,11 +128,18 @@ This repository is composed of several sub-projects, each utilizing Spring Boot 
   - Test db migrations.
 
 ### spring-rabbitmq-listener-test
+#### Purpose:
+#### Functional Goal:
+#### Behavioral Goal:
 - Ensure seamless integration between components by performing integration tests between:
   - A component responsible for publishing messages to a RabbitMQ exchange.
   - An AMQP listener that consumes messages from a RabbitMQ queue. The queue will be bound to the exchange to facilitate communication between the two components.
 
-### spring-data-cassandra-observability's core purpose is to demonstrate observability in a Spring Data Cassandra application.
+### spring-data-cassandra-observability's
+#### Purpose:
+- Purpose is to demonstrate observability in a Spring Data Cassandra application.
+#### Functional Goal:
+#### Behavioral Goal: 
 The project aims to:
 - Demonstrate the usage of Micrometer for measuring various aspects of a Spring Data Cassandra application.
 - Demonstrate the creation of observability points in a Spring Data Cassandra application using Micrometer.

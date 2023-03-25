@@ -1,159 +1,38 @@
 ## Working with data reactively
 
-### spring-data-r2dbc aims to:
-- Explain what it means to fetch data reactively.
-- Build an introductory reactive Spring Boot application.
-  - Leverage Spring Data to help manage our content.
-  - Create a reactive data repository, Spring Data Commons’ base interface for any reactive repository, ReactiveCrudRepository.
-  - Load test data by injecting a copy of our Spring Data R2DBC bean(R2dbcEntityTemplate) to the application's context.
-  - Return data reactively to our API controller that will be used to generate our web template served up at the root of our domain.
+### Objectives
+- Learn how to fetch data reactively: The code aims to implement reactive programming to fetch data asynchronously and reactively, which differs from traditional imperative programming. The code utilizes reactive streams to process the data.
+- Select an appropriate reactive data store: The code helps the user select an appropriate reactive data store, such as NoSQL databases, for their application. The code compares the features and performance of different reactive data stores.
+- Create a reactive data repository: The code shows how to create a reactive data repository using Spring Data, which provides a consistent way to interact with various data stores. The code defines queries and database operations using annotations.
+- Test R2DBC: The code demonstrates the use of R2DBC, a reactive SQL database driver, to interact with a relational database reactively. The code sets up a database connection and performs database operations using R2DBC, highlighting its benefits.
 
-### Fetching data reactively
+### Purpose
+- Demonstrate how to work with data reactively using Spring Boot. This involves understanding reactive programming concepts, selecting a reactive data store, creating a reactive data repository with Spring Data, and using R2DBC for reactive SQL database interactions.
 
-Choosing a database that needs to be accessed reactively and fits our needs, is a difficult task. 
+### Functional Goals:
+- Learn how to fetch data reactively
+  - Definition: Implement reactive programming to fetch data asynchronously and reactively using reactive streams.
+  - Explanation: This goal focuses on the functionality of the code, which is to fetch data in a reactive way using reactive streams. The implementation of reactive programming and reactive streams is a functional aspect of the code.
+- Select an appropriate reactive data store
+  - Definition: Help the user choose the best reactive data store, such as NoSQL databases, based on features and performance.
+  - Explanation: The goal here is to provide a functional capability to the user by assisting them in selecting the best reactive data store for their application based on features and performance. This is a functional requirement because it enables the user to make an informed decision about the data store they will use.
+- Create a reactive data repository
+  - Definition: Create a reactive data repository using Spring Data to interact with various data stores consistently, using annotations to define queries and database operations.
+  - Explanation: This goal involves the functional implementation of creating a reactive data repository using Spring Data. The repository provides a consistent way to interact with various data stores, and annotations are used to define queries and database operations. These are functional requirements of the code.
+- Test R2DBC
+  - Definition: Use R2DBC, a reactive SQL database driver, to interact with a relational database reactively and highlight its benefits.
+  - Explanation: This goal involves the functional testing of R2DBC, a reactive SQL database driver, to interact with a relational database reactively. The code sets up a database connection and performs database operations using R2DBC, highlighting its benefits. This is a functional requirement because it tests the functionality of the R2DBC driver and demonstrates its benefits.
 
-All parts of the system must be reactive. Otherwise, we risk a blocking call tying up a thread and clobbering our throughput.
-
-Because context switching is expensive, Project Reactor’s default thread pool size is the number of cores on the operating machine . By having no more threads than cores, we’re guaranteed to never have to suspend a thread, save its state, activate another thread, and restore its state.
-
-By taking such an expensive operation off the table, reactive applications can instead focus on the more effective tactic of simply going back to Reactor’s runtime for the next task (a.k.a. work stealing). However, this is only possible when we use Reactor’s Mono and Flux types along with their various operators.
-
-### Dependencies needed to build a reactive relational data store implementing the R2DBC specification:
-- spring-boot-starter-data-r2dbc: Spring Boot’s starter for Spring Data R2DBC
-- h2: The third-party embeddable database
-- r2dbc-h2: The Spring team’s R2DBC driver for H2
-
-### Creating a reactive data repository
-```java
-/**
-* Interface definition that declares:<br>
-* - The name for our Spring Data repository<br>
-* - Spring Data Commons’ base interface for any reactive repository, ReactiveCrudRepository as it's parent interface<br>
-* - The domain and primary key’s type for this repository
-    */
-    public interface org.example.springdatacassandraobservability.EmployeeRepository extends ReactiveCrudRepository<org.example.springdatacassandraobservability.Employee, Long> {}
-```
-
-```java
-/**
-* This class defines our domain’s type, as required in the org.example.springdatacassandraobservability.EmployeeRepository declaration.
-  */
-  public class org.example.springdatacassandraobservability.Employee {
-  /**
-  * The primary key of type Long is denoted by Spring Data Commons’ annotation, @Id.<br>
-  *  Note that this is NOT JPA’s jakarta.persistence.Id annotation but instead a Spring Data-specific annotation.
-   */
-     private @Id Long id;
-     private String name;
-     private String role;
-public org.example.springdatacassandraobservability.Employee(String name, String role) {
-this.name = name;
-this.role = role;
-}
-// setters, getters, equals, hashcode, toString...
-}
-```
-
-### Loading data with R2dbcEntityTemplate
-- Our Startup configuration class is flagged as a collection of bean definitions, needed to autoconfigure our application.
-- This class' initDatabase() method is turned into a Spring bean, added to the application context.
-- Inside this Java 8 lambda function that is coerced into a CommandLineRunner, we:
-  - Define our Spring Data R2DBC schema set up the schema by carrying out a SQL statement that creates an EMPLOYEE table with a self-incrementing id field in H2's dialect.
-  - Define 3 typesafe insert operations with a provided type parameter.
-  - Force execution of our reactive flow using Reactor Test.
-  - Verify that we receive an expected count, indicating that the operation was successful.
-  - Ensure that we receive Reactive Streams onComplete signals.
-
-### Returning data reactively to an API controller
-
-#### Hook up our reactive data supply to an API controller:
-```java
-/**
- * This controller class directly serializes request mapping outputs to the HTML response, instead of processing templates.<br>
- * Injects the org.example.springdatacassandraobservability.EmployeeRepository through constructor injection<br>
- */
-@RestController
-public class ApiController {
-
-  private final org.example.springdatacassandraobservability.EmployeeRepository repository;
-
-  public ApiController(org.example.springdatacassandraobservability.EmployeeRepository repository) {
-    this.repository = repository;
-  }
-
-  /**
-   * Maps HTTP GET /api/employees calls to this method.
-   * @return all data using the prebuilt findAll method from Spring Data Commons’ ReactiveCrudRepository interface.
-   */
-  @GetMapping("/api/employees")
-  Flux<org.example.springdatacassandraobservability.Employee> employees() {
-    return repository.findAll();
-  }
-
-  /**
-   * Maps HTTP POST /api/employees calls to this method.
-   * @param newEmployee processes and deserializes the incoming request body into an org.example.springdatacassandraobservability.Employee object only when the system is ready.<p>
-   *                    Ensures a completely new entry will be made to the database
-   * @return the result Mono<org.example.springdatacassandraobservability.Employee> from the executed save operation with a newly created org.example.springdatacassandraobservability.Employee object inside. This new object includes a fresh id field.
-   */
-
-  @PostMapping("/api/employees")
-  Mono<org.example.springdatacassandraobservability.Employee> add(@RequestBody Mono<org.example.springdatacassandraobservability.Employee> newEmployee) {
-    return newEmployee.flatMap(e -> {
-      org.example.springdatacassandraobservability.Employee employeeToLoad = new org.example.springdatacassandraobservability.Employee(e.getName(), e.getRole());
-      return repository.save(employeeToLoad);
-    });
-  }
-}
-```
-
-### Reactively dealing with data in a template
-
-#### Create a class that is focused on rendering html templates:
-```java
-/**
- * This controller class is focused on rendering templates.<p>
- * org.example.springdatacassandraobservability.EmployeeRepository is injected into this controller using constructor injection.
- */
-@Controller
-public class HomeController {
-```
-
-#### Generate the web template served up at the root of our domain with data returned by org.example.springdatacassandraobservability.EmployeeRepository's findAll() method:
-```java
-  /**
-   * Uses the Flux returned from org.example.springdatacassandraobservability.EmployeeRepository's findAll() method to gather a stream of items into Mono<List<org.example.springdatacassandraobservability.Employee>>
-   * Invokes the map operation to access the list inside that Mono where we then transform it into a Rendering.
-   * @return the constructed Mono<Rendering> through the build() step that transforms all the pieces into a final, immutable instance.
-   */
-  @GetMapping("/")
-  Mono<Rendering> index() {
-    return repository.findAll() //
-      .collectList() //
-      .map(employees -> Rendering //
-        .view("index") //
-        .modelAttribute("employees", employees) //
-        .modelAttribute("newEmployee", new org.example.springdatacassandraobservability.Employee("", "")) //
-        .build());
-  }
-```
-
-#### Process that form-backed org.example.springdatacassandraobservability.Employee bean in a POST-based web method:
-```java
-  /**
-   * @param newEmployee Extracts the name and role from the incoming org.example.springdatacassandraobservability.Employee object but ignores any possible id value, since we’re inserting a new entry.<p>
-   *                    Flattens/flatMaps the Mono<org.example.springdatacassandraobservability.Employee> results returned by our repository’s save() method.
-   *                    Translates the saved org.example.springdatacassandraobservability.Employee object into a redirect request.
-   * @return Mono<String> 
-   */
-  @PostMapping("/new-employee")
-  Mono<String> newEmployee(@ModelAttribute Mono<org.example.springdatacassandraobservability.Employee> newEmployee) {
-    return newEmployee //
-      .flatMap(e -> {
-        org.example.springdatacassandraobservability.Employee employeeToSave = new org.example.springdatacassandraobservability.Employee(e.getName(), e.getRole());
-        return repository.save(employeeToSave);
-      }) //
-      .map(employee -> "redirect:/");
-  }
-```
-
+### Behavioral Goals:
+- "Fetch data reactively"
+  - Definition: To implement reactive programming techniques to fetch data asynchronously and reactively using reactive streams, rather than traditional imperative programming.
+  - Explanation: This goal is behavioral because it emphasizes the process of fetching data in a reactive way, using specific programming techniques and tools, rather than just achieving a functional outcome (e.g., fetching data successfully).
+- "Select an appropriate reactive data store"
+  - Definition: To identify and select an appropriate reactive data store, such as a NoSQL database, based on its features and performance characteristics.
+  - Explanation: This goal is behavioral because it involves making a specific decision (selecting a reactive data store) based on certain criteria (features and performance), rather than just achieving a functional outcome (e.g., storing data successfully).
+- "Create a reactive data repository"
+  - Definition: To create a reactive data repository using Spring Data, which provides a consistent way to interact with various data stores, and define queries and database operations using annotations.
+  - Explanation: This goal is behavioral because it involves a specific process (creating a reactive data repository) using specific tools and techniques (Spring Data and annotations), rather than just achieving a functional outcome (e.g., accessing data successfully).
+- "Test R2DBC"
+  - Definition: To demonstrate the use of R2DBC, a reactive SQL database driver, to interact with a relational database reactively, including setting up a database connection and performing database operations using R2DBC.
+  - Explanation: This goal is behavioral because it involves a specific process (testing R2DBC) using specific tools and techniques (R2DBC and database operations), rather than just achieving a functional outcome (e.g., connecting to a database successfully).

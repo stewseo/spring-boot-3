@@ -1,4 +1,4 @@
-**## Testing Spring Boot 3 Applications
+## Testing Spring Boot 3 Applications
 
 ### Primary Purpose:
 - Provide examples of how to demonstrate how to test various components of Spring Boot applications, including data repositories, web controllers, and security policies, using various techniques such as mocks, embedded databases, and containerized databases.

@@ -22,7 +22,7 @@ rootProject.name = 'spring-boot-3'
 include 'spring-data-jpa-queries',
         'spring-method-level-security',
         'spring-security-oauth2',
-        'spring-boot-tests',
+        'spring-boot-testing',
         'spring-data-jpa-integration-testing',
         'spring-rabbitmq-listener-test',
         'spring-boot-configuration-management',
